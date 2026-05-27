@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grile EIA · Cele 4 Variante · UPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800;9..144,900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Slightly different palette: deep navy + warm cream */
+  --bg: #ebe5d6;
+  --bg-darker: #ddd5c2;
+  --paper: #f5f0e2;
+  --ink: #0f1a2e;
+  --ink-soft: #3a4358;
+  --ink-muted: #7b8094;
+  --accent: #b8334a;
+  --accent-soft: #d56b7e;
+  --gold: #c08a3b;
+  --gold-soft: #e9d09a;
+  --green: #3d6b3a;
+  --green-soft: #d9e6cf;
+  --red: #a23b2c;
+  --red-soft: #f0d8d0;
+  --line: #c8c0aa;
+  --line-soft: #ddd5be;
+  --shadow: 0 1px 0 rgba(15,26,46,0.05), 0 8px 24px -8px rgba(15,26,46,0.18);
+  --shadow-lg: 0 4px 0 rgba(15,26,46,0.06), 0 24px 56px -20px rgba(15,26,46,0.28);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: oldstyle-nums;
+}
+
+body {
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 15% 5%, rgba(192, 138, 59, 0.07) 0%, transparent 45%),
+    radial-gradient(circle at 85% 95%, rgba(184, 51, 74, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.06, 0 0 0 0 0.1, 0 0 0 0 0.18, 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+  position: relative;
+  z-index: 1;
+}
+
+/* === HEADER === */
+header.masthead {
+  text-align: center;
+  padding: 32px 0 28px;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.eyebrow .ornament { display:inline-block; margin: 0 8px; color: var(--gold); }
+
+h1.title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(38px, 6.5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'opsz' 144;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+h1.title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--ink-soft);
+  margin-top: 10px;
+}
+
+.divider-flourish {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0 4px;
+  color: var(--gold);
+  font-size: 14px;
+}
+
+.divider-flourish::before, .divider-flourish::after {
+  content: '';
+  height: 1px;
+  width: 40px;
+  background: var(--line);
+}
+
+/* === VARIANT CARDS (the 4 main variants) === */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 36px 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.variant-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.variant-card {
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  padding: 22px 22px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  overflow: hidden;
+}
+
+.variant-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--ink);
+  transform: scaleX(0.15);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.variant-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.variant-card:hover::before { transform: scaleX(1); background: var(--accent); }
+
+.variant-card .roman {
+  font-family: 'Fraunces', serif;
+  font-size: 56px;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.04em;
+  display: block;
+  margin: 4px 0 12px;
+  font-variation-settings: 'opsz' 144;
+}
+
+.variant-card h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+
+.variant-card .count {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.variant-card .badge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 3px 8px;
+  font-weight: 600;
+}
+
+.variant-card .badge.solved { background: var(--green); }
+
+/* === SECONDARY MODE CARDS === */
+.mode-grid-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.mode-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 20px 22px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.mode-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.mode-card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.mode-card h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  font-weight: 500;
+  margin: 8px 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.mode-card p {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+.mode-card .arrow {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-size: 16px;
+  color: var(--ink-muted);
+  transition: transform 0.2s;
+}
+
+.mode-card:hover .arrow { transform: translate(3px, -3px); color: var(--accent); }
+
+/* === STATS BANNER === */
+.stats-banner {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 28px;
+  text-align: center;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.stats-banner .stat-item .val {
+  font-family: 'Fraunces', serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--bg);
+}
+
+.stats-banner .stat-item .val em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.stats-banner .stat-item .lab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(235, 229, 214, 0.6);
+  margin-top: 6px;
+}
+
+.stats-banner .reset-mini {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: rgba(235, 229, 214, 0.4);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stats-banner .reset-mini:hover { color: var(--gold); }
+
+/* === QUIZ HEADER === */
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 4px 0;
+}
+
+.back-btn:hover { color: var(--accent); }
+
+.quiz-title-mini {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--ink);
+  flex: 1;
+  text-align: center;
+}
+
+.quiz-title-mini strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.progress-info .stat {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.progress-info .stat strong {
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 3px;
+  background: var(--line-soft);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--ink);
+  transition: width 0.3s ease;
+}
+
+/* === QUESTION CARD === */
+.question-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.q-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.q-number {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 4px 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.q-category {
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.q-text {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  line-height: 1.45;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  margin-bottom: 28px;
+  font-variation-settings: 'opsz' 36;
+}
+
+.options { display: flex; flex-direction: column; gap: 10px; }
+
+.option {
+  background: var(--bg);
+  border: 1.5px solid var(--line);
+  padding: 16px 18px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink);
+  text-align: left;
+  font-size: 15.5px;
+  line-height: 1.5;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.option:hover:not(.locked) {
+  border-color: var(--ink);
+  background: var(--paper);
+}
+
+.option .letter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: var(--paper);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  margin-top: 1px;
+  transition: all 0.15s;
+}
+
+.option:hover:not(.locked) .letter {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.option .opt-text { flex: 1; }
+
+.option.selected { border-color: var(--ink); background: var(--paper); }
+.option.selected .letter { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.option.correct { border-color: var(--green); background: var(--green-soft); }
+.option.correct .letter { background: var(--green); color: var(--bg); border-color: var(--green); }
+
+.option.incorrect { border-color: var(--red); background: var(--red-soft); }
+.option.incorrect .letter { background: var(--red); color: var(--bg); border-color: var(--red); }
+
+.option.locked { cursor: default; }
+
+.option .indicator {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.option.correct .indicator { opacity: 1; color: var(--green); }
+.option.incorrect .indicator { opacity: 1; color: var(--red); }
+
+/* === FEEDBACK === */
+.feedback {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-left: 3px solid var(--gold);
+  background: var(--bg);
+  display: none;
+}
+
+.feedback.show { display: block; animation: fadeIn 0.3s ease; }
+
+.feedback .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.feedback .text {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === ACTIONS === */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 14px 22px;
+  cursor: pointer;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+  transition: all 0.15s;
+}
+
+.btn:hover { background: var(--accent); border-color: var(--accent); }
+
+.btn-secondary { background: transparent; color: var(--ink); }
+.btn-secondary:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.btn-ghost {
+  background: none;
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.btn-ghost:hover { border-color: var(--ink); color: var(--ink); background: var(--paper); }
+
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.spacer { flex: 1; }
+
+/* === RESULTS === */
+.results {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 48px 48px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.results .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+.score-display {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(72px, 14vw, 120px);
+  font-weight: 500;
+  font-variation-settings: 'opsz' 144;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  margin: 8px 0;
+}
+
+.score-display .slash { color: var(--ink-muted); font-weight: 300; }
+.score-display .total { color: var(--ink-muted); font-size: 0.5em; font-weight: 400; }
+
+.score-percent {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 24px;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+
+.results-stats {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  margin: 28px 0;
+  flex-wrap: wrap;
+}
+
+.results-stats .stat-block { text-align: center; }
+
+.results-stats .stat-block .num {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.results-stats .stat-block .num.green { color: var(--green); }
+.results-stats .stat-block .num.red { color: var(--red); }
+
+.results-stats .stat-block .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-top: 6px;
+}
+
+.results-message {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin: 24px auto;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+/* === REVIEW LIST === */
+.review-list {
+  margin-top: 36px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+}
+
+.review-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+.review-item:last-child { border-bottom: none; }
+
+.review-item .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-muted);
+  width: 32px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.review-item .body { flex: 1; }
+
+.review-item .body .q { color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+
+.review-item .body .a {
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.review-item .status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.review-item .status.ok { background: var(--green-soft); color: var(--green); }
+.review-item .status.no { background: var(--red-soft); color: var(--red); }
+
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0 16px;
+  flex-wrap: wrap;
+}
+
+.filter-chip {
+  background: none;
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 0.15s;
+}
+
+.filter-chip:hover { border-color: var(--ink); color: var(--ink); }
+.filter-chip.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* === FLOATING HOME BTN === */
+.home-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.home-btn:hover { background: var(--accent); transform: scale(1.05); }
+.home-btn.show { display: flex; }
+
+/* Keyboard hint */
+.kbd-hint {
+  position: fixed;
+  bottom: 20px;
+  left: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+  display: none;
+  background: var(--paper);
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+}
+
+.kbd-hint.show { display: block; }
+
+.kbd-hint kbd {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 9.5px;
+  margin: 0 2px;
+}
+
+@media (max-width: 640px) {
+  .question-card { padding: 24px 22px; }
+  .results { padding: 32px 24px; }
+  .kbd-hint { display: none !important; }
+  .container { padding: 20px 16px 80px; }
+  .variant-card .roman { font-size: 44px; }
+}
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; animation: pageFade 0.35s ease; }
+
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* "Other quiz" link */
+.other-quiz {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============== HOME SCREEN ============== -->
+  <div id="screen-home" class="screen active">
+    <header class="masthead">
+      <div class="eyebrow">UPT · Etica si Integritate Academica <span class="ornament">⸙</span> 4 Variante</div>
+      <h1 class="title">Cele <em>patru</em><br>Variante</h1>
+      <div class="divider-flourish">❦</div>
+      <div class="subtitle">Grile centralizate cu raspunsuri verificate · 53 de intrebari</div>
+    </header>
+
+    <div class="stats-banner" id="stats-banner" style="display:none;">
+      <button class="reset-mini" id="reset-stats" title="Resetare statistici">RESET</button>
+      <div class="stat-item">
+        <div class="val" id="stat-answered">0</div>
+        <div class="lab">Raspunse</div>
+      </div>
+      <div class="stat-item">
+        <div class="val"><em id="stat-correct">0</em></div>
+        <div class="lab">Corecte</div>
+      </div>
+      <div class="stat-item">
+        <div class="val" id="stat-accuracy">—</div>
+        <div class="lab">Acuratete</div>
+      </div>
+      <div class="stat-item">
+        <div class="val" id="stat-streak">0</div>
+        <div class="lab">Streak</div>
+      </div>
+    </div>
+
+    <div class="section-label">Cele 4 variante de grila</div>
+    <div class="variant-grid" id="variant-grid"></div>
+
+    <div class="section-label">Intrebari suplimentare</div>
+    <div class="mode-grid-secondary">
+      <button class="mode-card" data-mode="poze">
+        <div class="num">A</div>
+        <div class="arrow">↗</div>
+        <h3>Din poze</h3>
+        <p>16 intrebari extrase din pozele incarcate.</p>
+      </button>
+      <button class="mode-card" data-mode="online">
+        <div class="num">B</div>
+        <div class="arrow">↗</div>
+        <h3>Din quiz online</h3>
+        <p>5 intrebari din capturile platformei de testare.</p>
+      </button>
+    </div>
+
+    <div class="section-label">Moduri combinate</div>
+    <div class="mode-grid-secondary">
+      <button class="mode-card" data-mode="all">
+        <div class="num">I</div>
+        <div class="arrow">↗</div>
+        <h3>Toate la rand</h3>
+        <p>Toate 53 de intrebari in ordine (variante + suplimentare).</p>
+      </button>
+      <button class="mode-card" data-mode="shuffle">
+        <div class="num">II</div>
+        <div class="arrow">↗</div>
+        <h3>Mod Aleator</h3>
+        <p>Toate intrebarile amestecate, plus optiunile in ordine random.</p>
+      </button>
+      <button class="mode-card" data-mode="exam">
+        <div class="num">III</div>
+        <div class="arrow">↗</div>
+        <h3>Simulare examen</h3>
+        <p>O varianta aleasa random + 2 suplimentare. Scor la final.</p>
+      </button>
+      <button class="mode-card" data-mode="review">
+        <div class="num">IV</div>
+        <div class="arrow">↗</div>
+        <h3>Doar gresite</h3>
+        <p>Reia doar intrebarile la care ai gresit cel putin o data.</p>
+      </button>
+    </div>
+
+    <div class="other-quiz">
+      Ai mai inceput grilele de 164? Acela e fisierul separat: <em>grile-etica-quiz.html</em>
+    </div>
+  </div>
+
+  <!-- ============== QUIZ SCREEN ============== -->
+  <div id="screen-quiz" class="screen">
+    <div class="quiz-header">
+      <button class="back-btn" id="back-home">← Acasa</button>
+      <div class="quiz-title-mini" id="quiz-title-mini"></div>
+      <div class="progress-info">
+        <div class="stat"><span id="q-current">1</span> <span style="color:var(--ink-muted)">/</span> <strong id="q-total">8</strong></div>
+        <div class="stat" id="score-live"><strong>0</strong> corecte</div>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+    <div class="question-card" id="question-card"></div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" id="prev-btn">← Anterior</button>
+      <button class="btn btn-ghost" id="skip-btn">Sari</button>
+      <div class="spacer"></div>
+      <button class="btn" id="next-btn">Urmatoarea →</button>
+    </div>
+  </div>
+
+  <!-- ============== RESULTS ============== -->
+  <div id="screen-results" class="screen">
+    <div class="results">
+      <div class="label" id="results-label">Rezultat final</div>
+      <div class="score-display">
+        <span id="final-score">0</span><span class="slash"> / </span><span class="total" id="final-total">0</span>
+      </div>
+      <div class="score-percent" id="final-percent">0%</div>
+      <div class="results-stats">
+        <div class="stat-block">
+          <div class="num green" id="final-correct">0</div>
+          <div class="lbl">Corecte</div>
+        </div>
+        <div class="stat-block">
+          <div class="num red" id="final-wrong">0</div>
+          <div class="lbl">Gresite</div>
+        </div>
+        <div class="stat-block">
+          <div class="num" id="final-skipped">0</div>
+          <div class="lbl">Sarite</div>
+        </div>
+      </div>
+      <div class="results-message" id="results-message"></div>
+
+      <div class="actions" style="justify-content:center;">
+        <button class="btn btn-secondary" id="restart-btn">Reia</button>
+        <button class="btn" id="results-home-btn">Acasa</button>
+      </div>
+
+      <div class="filter-chips" id="filter-chips" style="justify-content:center; margin-top:32px;">
+        <button class="filter-chip active" data-filter="all">Toate</button>
+        <button class="filter-chip" data-filter="wrong">Doar gresite</button>
+        <button class="filter-chip" data-filter="right">Doar corecte</button>
+      </div>
+
+      <div class="review-list" id="review-list"></div>
+    </div>
+  </div>
+
+</div>
+
+<button class="home-btn" id="home-btn-float" title="Inapoi acasa">⌂</button>
+<div class="kbd-hint" id="kbd-hint">
+  <kbd>1-4</kbd> alege · <kbd>↵</kbd> urmatoarea · <kbd>←/→</kbd> navigare
+</div>
+
+<script>
+const QUIZ_DATA = {"variants": {"1": [{"q": "Meta-etica se refera la:", "opts": ["Studiul limbajului moral", "Studiul comportamentului profesional", "Studiul normelor juridice"], "a": 0}, {"q": "Hedonismul reprezinta:", "opts": ["O morala a placerii", "O morala a datoriei", "O morala a virtutii"], "a": 0}, {"q": "Exista mai multe modele generale pentru a raspunde si a intra in dialog cu ideile celorlalti:", "opts": ["Doar acordul si dezacordul", "Acordul, dezacordul, acordul partial si ignoranta", "Doar dezacordul si combinatia intre a fi si a nu fi de acord"], "a": 1}, {"q": "Fac exceptie de la acuza de plagiat informatiile care tin de sfera:", "opts": ["Cunoasterii comune", "Cercetarii avansate", "Publicatiilor stiintifice"], "a": 0}, {"q": "Codul de etica si deontologie al UPT, art. 36, alin. 10-13, descrie abaterile de la buna conduita ale superiorilor prin referire la:", "opts": ["Plagiat", "Confectionarea de date", "Abuzul de autoritate"], "a": 2}, {"q": "Componenta a dreptului de proprietate, folosinta permite titularului:", "opts": ["Doar contemplarea bunului", "Orice forma permisa de lege a folosirii unui bun, incluzand obtinerea unui avantaj material, de exemplu profit", "Vanzarea exclusiva a bunului"], "a": 1}, {"q": "Din punct de vedere juridic, inventia reprezinta:", "opts": ["O simpla idee", "O descoperire stiintifica fundamentala", "O contributie inspirata si originala, care trebuie sa fie noua, sa implice o activitate inventiva si sa fie susceptibila de aplicare industriala pentru a putea fi brevetata"], "a": 2}, {"q": "Autoratul de onoare poate fi intalnit in randul:", "opts": ["Studentilor si profesorilor", "Doar al profesorilor", "Doar al studentilor"], "a": 0}], "2": [{"q": "Lucrurile considerate importante pentru o persoana sau o comunitate, care ii motiveaza pe oameni sa dobandeasca sau sa realizeze lucrurile respective, poarta denumirea de:", "opts": ["Norme morale", "Valori etice", "Reguli sociale"], "a": 1}, {"q": "Constantin Noica afirma ca profesorul, in maniera socratica, este un mijlocitor intre:", "opts": ["Profesor si elev", "Elev si materie", "Elev si el insusi"], "a": 2}, {"q": "\"Actioneaza astfel ca sa folosesti umanitatea atat in persoana ta, cat si in persoana oricui altuia intotdeauna in acelasi timp ca scop, dar niciodata numai ca mijloc\" reprezinta:", "opts": ["Imperativul categoric kantian", "Imperativul practic kantian", "Principiul utilitarist"], "a": 1}, {"q": "A parafraza este sinonim cu:", "opts": ["A rezuma (in sens larg, conform formularii din curs)", "A copia", "A traduce"], "a": 0}, {"q": "Folosirea unor informatii inexistente sau eronate despre autori sau materiale ori a unor surse fictive se numeste:", "opts": ["Plagiat mascat", "Plagiat hibrid", "Plagiat clona"], "a": 0}, {"q": "Autorul/autoarea cartii \"Cum sa redactam o lucrare de licenta, o teza de doctorat, un articol stiintific in domeniul stiintelor socioumane\" este:", "opts": ["Emilia Sercan", "Septimiu Chelcea", "Constantin Noica"], "a": 1}, {"q": "Normele juridice care reglementeaza relatii patrimoniale intre persoane private sunt incluse in ramura dreptului:", "opts": ["Penal", "Administrativ", "Civil"], "a": 2}, {"q": "Creatia in care contributiile personale ale coautorilor formeaza o unitate indisolubila in natura ei poarta denumirea de:", "opts": ["Opera colectiva", "Opera comuna", "Opera derivata"], "a": 0}], "3": [{"q": "Dupa Constantin Noica, misiunea profesorului este cea de a transmite:", "opts": ["Cunostinte teoretice", "Informatii practice", "Stari de spirit"], "a": 2}, {"q": "Parintele domeniului integritatii academice este considerat:", "opts": ["Immanuel Kant", "Don McCabe", "Aristotel"], "a": 1}, {"q": "Conceptia conform careia enunturile etice nu sunt nici adevarate si nici false, ele neavand valoare de adevar, corespunde:", "opts": ["Cognitivismului etic", "Non-cognitivismului etic", "Realismului etic"], "a": 1}, {"q": "Modelul \"ei spun / eu spun\" apartine autorilor:", "opts": ["Gerald Graff si Cathy Birkenstein", "Don McCabe si James Lang", "Septimiu Chelcea si Emilia Sercan"], "a": 0}, {"q": "Plagiatul agregat este:", "opts": ["Plagiatul cuvant cu cuvant", "Plagiatul prin parafrazare nementionata", "Un tip de plagiat care nu aduce niciun plus cunoasterii, intrucat nu adauga nicio contributie originala, cu toate ca respecta normele de citare a surselor in corpul textului"], "a": 2}, {"q": "Autoratul de onoare este o practica:", "opts": ["Acceptata a integritatii academice", "Corupta a integritatii academice", "Neutra fata de integritatea academica"], "a": 1}, {"q": "Autorul/autoarea cartii \"Fabrica de doctorate sau cum se surpa fundamentele unei natii\" este:", "opts": ["Emilia Sercan", "Septimiu Chelcea", "Don McCabe"], "a": 0}, {"q": "Stirile de presa si textele oficiale legislative:", "opts": ["Sunt protejate integral de dreptul de autor", "Sunt protejate doar partial de dreptul de autor", "Nu sunt protejate de dreptul de autor"], "a": 2}], "4": [{"q": "Normele etice reprezinta:", "opts": ["Acele reguli scrise pe care toata lumea trebuie sa le respecte", "Ideile si judecatile fundamentale care fac trimitere la valorile etice si reglementeaza comportamentul oamenilor", "Acele reguli considerate obligatorii intr-o societate, dupa care membrii acesteia trebuie sa se conduca; ele reglementeaza ceea ce este considerat firesc, comportamentul asteptat al oamenilor"], "a": 2}, {"q": "Sablonul central al scrierii academice este:", "opts": ["Ei spun / Eu spun", "Doar eu spun", "Doar ei spun"], "a": 0}, {"q": "Realistii etici sustin ca:", "opts": ["Afirmatiile etice nu au valoare de adevar", "Afirmatiile etice exprima propozitii care au valori de adevar", "Afirmatiile etice sunt subiective"], "a": 1}, {"q": "O strategie de legare a partilor intre ultima propozitie si urmatoarea este:", "opts": ["Folosirea verbelor-semnal pentru a exprima acordul, dezacordul sau recomandarile", "Dezvoltarea unui set de termeni, expresii sau fraze-cheie", "Folosirea exclusiva a cifrelor"], "a": 1}, {"q": "Autoplagiatul se refera la:", "opts": ["Reluarea integrala sau partiala a unor texte sau experimente anterior publicate", "Preluarea de la alti autori fara citare", "Folosirea ideilor din domeniul public"], "a": 0}, {"q": "Contractul pentru inselatorie este o forma de:", "opts": ["Plagiat clasic", "Citare corecta", "Scriitura a fantomei (ghostwriting)"], "a": 2}, {"q": "Sanctiunea juridica:", "opts": ["Este aplicata de catre autoritati specializate ale statului, in conformitate cu un set de reguli standardizate aplicabile oricarui individ aflat in raza de aplicare a normelor juridice care le contin", "Este aplicata aleatoriu", "Se aplica doar in mediul academic"], "a": 0}, {"q": "Proprietatea intelectuala poate fi definita drept:", "opts": ["Ansamblul normelor juridice care reglementeaza raporturile dintre indivizi cu privire la protectia creatiei intelectuale in domeniile industrial, stiintific, literar si artistic, inclusiv semnele distinctive ale activitatii de comert", "Dreptul de a folosi liber orice opera publica", "Dreptul exclusiv al statului asupra creatiilor"], "a": 0}]}, "suplimentare_poze": [{"q": "Deontologia reprezinta:", "opts": ["Stiinta care investigheaza normele, principiile morale, sistemele teoretice care propun o modalitate sau alta de reglementare a relatiilor si de realizare a binelui in societatile umane", "Disciplina care studiaza normele si obligatiile specifice unei profesii anumite", "Totalitatea normelor, comportamentelor si convingerilor oamenilor care cad sub incidenta cuplului de termeni opusi bine-rau, valorile pe care membrii unui grup le considera importante"], "a": 1}, {"q": "Principalele instrumente ale sablonului \"ei spun\" sunt:", "opts": ["Folosirea cifrelor si statisticilor", "Rezumatul si citatul", "Faptele si anecdotele revelatoare"], "a": 1}, {"q": "Sablonul \"Totusi, unii specialisti ar putea sa contrazica punctul meu de vedere, insistand ca ___\" introduce in text vocea unui:", "opts": ["Sceptic", "Ironic", "Rival"], "a": 0}, {"q": "Cel mai intalnit tip de plagiat in mediul universitar este:", "opts": ["Plagiatul prin mixare", "Plagiatul clona", "Plagiatul hibrid"], "a": 1}, {"q": "Conform utilitarismului, faptele oamenilor sunt:", "opts": ["Bune daca isi au originea in virtuti si rele daca se origineaza in afara virtutilor", "Bune daca aduc fericirea si rele daca determina nefericirea", "Bune daca provin din datorie si rele daca nu provin din ea"], "a": 1}, {"q": "Relativismul etic conventional sustine ideea ca:", "opts": ["Adevarul principiilor morale este relativ la familii", "Adevarul principiilor morale este relativ la indivizi", "Adevarul principiilor morale este relativ la cultura"], "a": 2}, {"q": "Conform filosofiei morale a lui Immanuel Kant, omul si oricare alta fiinta rationala este:", "opts": ["Ideal de urmat", "Mijloc", "Scop in sine"], "a": 2}, {"q": "Sablonul \"Teoria lui X despre ___ este extrem de utila pentru ca arunca o lumina asupra chestiunii dificile a ___\" exprima un:", "opts": ["Acord simultan", "Acord partial", "Acord cu motivatii"], "a": 2}, {"q": "Pentru evitarea plagiatului cu referire la un autor este necesara:", "opts": ["Precizarea intamplatoare a numelui autorului autentic", "Cuprinderea numelui autorului in lista bibliografica de la sfarsitul lucrarii", "Precizarea numelui autorului de fiecare data cand este citat sau parafrazat si trecerea lui in lista bibliografica de la sfarsitul lucrarii"], "a": 2}, {"q": "Plagiatul ca furt intelectual de cuvinte, idei si informatii se aplica in cazurile:", "opts": ["Intentionate din realitate", "Intentionate si neintentionate din realitate", "Intentionate si neintentionate, din realitate si din spatiul virtual"], "a": 2}, {"q": "Norma juridica este implementata si aparata de:", "opts": ["Cetateni", "Stat, respectiv autoritatile publice ale acestuia", "Exclusiv de sefii de stat"], "a": 1}, {"q": "NU constituie un scop al aplicarii sanctiunii juridice:", "opts": ["Prevenirea incalcarii ordinii si normelor juridice pe viitor", "Indreptarea individului care a comis incalcarea", "Razbunarea celor vatamati pe faptuitor"], "a": 2}, {"q": "Selectarea datelor in studiile stiintifice se refera la:", "opts": ["Publicarea integrala a datelor", "Raportarea exclusiva a datelor considerate convenabile", "Citarea corecta a surselor"], "a": 1}, {"q": "Etica virtutii isi are originea la:", "opts": ["Immanuel Kant", "Aristotel", "John Stuart Mill"], "a": 1}, {"q": "Norma juridica este:", "opts": ["O regula optionala", "O recomandare morala", "O regula creata intr-o societate, care are ca scop reglementarea conduitei indivizilor"], "a": 2}, {"q": "Brevetul de inventie:", "opts": ["Este un document fara valoare juridica", "Reprezinta un act care protejeaza dreptul de proprietate intelectuala al inventatorului", "Se acorda doar profesorilor universitari"], "a": 1}], "suplimentare_online": [{"q": "Reprezinta abatere de la normele de buna conduita in activitatea de comunicare, publicare, diseminare si popularizare stiintifica:", "opts": ["Diferentele de opinie stiintifica exprimate de doi autori in lucrari publicate distinct, fara a avea acordul reciproc", "Excluderea unor coautori care au contribuit semnificativ la publicatie", "Introducerea de informatii adevarate in dosarele de candidatura pentru posturi de cercetare-dezvoltare"], "a": 1}, {"q": "Conform Legii nr. 206/2004, constituie abatere grava de la buna conduita in activitatea stiintifica si activitatea universitara:", "opts": ["Confectionarea de rezultate sau inlocuirea rezultatelor cu date fictive", "Nementionarea descoperirilor anterioare", "Pastrarea datelor pe o perioada mai lunga de timp"], "a": 0}, {"q": "Una dintre formele consacrate ale raspunderii juridice este:", "opts": ["Raspunderea disciplinara pentru savarsirea unei abateri disciplinare", "Raspunderea politica", "Raspunderea penala pentru savarsirea unei fapte contraventionale"], "a": 0}, {"q": "Fapta persoanei care isi insuseste, fara drept, in intregime sau in parte, opera unui alt autor si o prezinta ca o creatie intelectuala proprie:", "opts": ["Constituie infractiune independenta si se pedepseste cu inchisoare de la 6 luni la 3 ani sau cu amenda", "Impacarea inlatura raspunderea disciplinara", "Regretul inlatura raspunderea penala"], "a": 0}, {"q": "Raspunderea civila contractuala poate fi atrasa in conditiile in care:", "opts": ["Subiectul publica lucrari stiintifice fara a informa decanul facultatii", "Subiectul nu executa intocmai si la timp obligatia asumata prin contract", "Subiectul incalca regulile de circulatie instituite de Codul Rutier"], "a": 1}]};
+</script>
+
+<script>
+// ============== STATE ==============
+const STORAGE_KEY = 'upt_eia_variants_quiz_v1';
+
+const state = {
+  mode: null,
+  questions: [],
+  optionOrder: [],
+  currentIdx: 0,
+  selected: {},
+  answered: {},
+  isExam: false,
+  showFeedback: true,
+  titleLabel: '',
+};
+
+let stats = {
+  perQuestion: {},       // keyed by qId (e.g. "v1-3", "poze-5", "online-2")
+  variantStatus: {},     // { "1": "in_progress"/"done"/"perfect", ... }
+  totalAnswered: 0,
+  totalCorrect: 0,
+  streak: 0,
+  bestStreak: 0,
+};
+
+// ============== STORAGE ==============
+function loadStats() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      stats = { ...stats, ...parsed };
+    }
+  } catch (e) { /* ignore */ }
+}
+
+function saveStats() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+  } catch (e) { /* ignore */ }
+}
+
+function resetStats() {
+  if (!confirm('Sigur vrei sa resetezi toate statisticile?')) return;
+  stats = { perQuestion: {}, variantStatus: {}, totalAnswered: 0, totalCorrect: 0, streak: 0, bestStreak: 0 };
+  saveStats();
+  renderHome();
+}
+
+// ============== HELPERS ==============
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function getAccuracy() {
+  if (stats.totalAnswered === 0) return null;
+  return Math.round((stats.totalCorrect / stats.totalAnswered) * 100);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('home-btn-float').classList.toggle('show', id !== 'screen-home');
+  document.getElementById('kbd-hint').classList.toggle('show', id === 'screen-quiz');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHtml(s) {
+  if (typeof s !== 'string') s = String(s);
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// Build a flat array of all questions with IDs
+function buildAllQuestions() {
+  const all = [];
+  for (const [vname, qs] of Object.entries(QUIZ_DATA.variants)) {
+    qs.forEach((q, i) => all.push({ ...q, id: `v${vname}-${i+1}`, source: `Varianta ${vname}`, num: i+1 }));
+  }
+  QUIZ_DATA.suplimentare_poze.forEach((q, i) => all.push({ ...q, id: `poze-${i+1}`, source: 'Din poze', num: i+1 }));
+  QUIZ_DATA.suplimentare_online.forEach((q, i) => all.push({ ...q, id: `online-${i+1}`, source: 'Quiz online', num: i+1 }));
+  return all;
+}
+
+const ALL_QUESTIONS = buildAllQuestions();
+
+const ROMAN = { "1": "I", "2": "II", "3": "III", "4": "IV" };
+
+// ============== HOME ==============
+function renderHome() {
+  const banner = document.getElementById('stats-banner');
+  if (stats.totalAnswered > 0) {
+    banner.style.display = 'flex';
+    document.getElementById('stat-answered').textContent = stats.totalAnswered;
+    document.getElementById('stat-correct').textContent = stats.totalCorrect;
+    const acc = getAccuracy();
+    document.getElementById('stat-accuracy').textContent = acc !== null ? acc + '%' : '—';
+    document.getElementById('stat-streak').textContent = stats.bestStreak;
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Variant grid
+  const grid = document.getElementById('variant-grid');
+  grid.innerHTML = '';
+  for (const vname of ['1', '2', '3', '4']) {
+    const count = QUIZ_DATA.variants[vname].length;
+    const status = stats.variantStatus[vname]; // 'done' / 'perfect' / undefined
+
+    let badge = '';
+    if (status === 'perfect') badge = '<span class="badge solved">✓ 100%</span>';
+    else if (status === 'done') badge = '<span class="badge solved">Rezolvat</span>';
+    else if (status === 'in_progress') badge = '<span class="badge">In curs</span>';
+
+    const btn = document.createElement('button');
+    btn.className = 'variant-card';
+    btn.innerHTML = `
+      ${badge}
+      <h3>Varianta</h3>
+      <span class="roman">${ROMAN[vname]}</span>
+      <div class="count">${count} intrebari</div>
+    `;
+    btn.addEventListener('click', () => startMode('variant', vname));
+    grid.appendChild(btn);
+  }
+}
+
+// ============== START MODE ==============
+function startMode(mode, param) {
+  state.showFeedback = true;
+  state.isExam = false;
+  state.selected = {};
+  state.answered = {};
+  state.currentIdx = 0;
+
+  if (mode === 'variant') {
+    state.mode = 'variant:' + param;
+    state.titleLabel = 'Varianta ' + ROMAN[param];
+    state.questions = QUIZ_DATA.variants[param].map((q, i) => ({
+      ...q, id: `v${param}-${i+1}`, source: `Varianta ${param}`, num: i+1
+    }));
+  } else if (mode === 'poze') {
+    state.mode = 'poze';
+    state.titleLabel = 'Intrebari din poze';
+    state.questions = QUIZ_DATA.suplimentare_poze.map((q, i) => ({
+      ...q, id: `poze-${i+1}`, source: 'Din poze', num: i+1
+    }));
+  } else if (mode === 'online') {
+    state.mode = 'online';
+    state.titleLabel = 'Intrebari din quiz online';
+    state.questions = QUIZ_DATA.suplimentare_online.map((q, i) => ({
+      ...q, id: `online-${i+1}`, source: 'Quiz online', num: i+1
+    }));
+  } else if (mode === 'all') {
+    state.mode = 'all';
+    state.titleLabel = 'Toate intrebarile';
+    state.questions = [...ALL_QUESTIONS];
+  } else if (mode === 'shuffle') {
+    state.mode = 'shuffle';
+    state.titleLabel = 'Mod Aleator';
+    state.questions = shuffle(ALL_QUESTIONS);
+  } else if (mode === 'exam') {
+    state.mode = 'exam';
+    state.isExam = true;
+    state.showFeedback = false;
+    state.titleLabel = 'Simulare examen';
+    // Pick a random variant + 2 random supplementary
+    const vname = ['1','2','3','4'][Math.floor(Math.random()*4)];
+    const variantQs = QUIZ_DATA.variants[vname].map((q, i) => ({
+      ...q, id: `v${vname}-${i+1}`, source: `Varianta ${vname}`, num: i+1
+    }));
+    const allSupl = [
+      ...QUIZ_DATA.suplimentare_poze.map((q, i) => ({...q, id: `poze-${i+1}`, source:'Din poze', num: i+1})),
+      ...QUIZ_DATA.suplimentare_online.map((q, i) => ({...q, id: `online-${i+1}`, source:'Quiz online', num: i+1})),
+    ];
+    const extras = shuffle(allSupl).slice(0, 2);
+    state.questions = shuffle([...variantQs, ...extras]);
+    state.titleLabel = `Simulare examen · Varianta ${ROMAN[vname]} + 2 extra`;
+  } else if (mode === 'review') {
+    state.mode = 'review';
+    state.titleLabel = 'Doar intrebari gresite';
+    const wrongIds = Object.entries(stats.perQuestion)
+      .filter(([id, s]) => s.lastResult === 'wrong' || (s.attempts > 0 && s.correct < s.attempts))
+      .map(([id]) => id);
+    if (wrongIds.length === 0) {
+      alert('Nu ai gresit inca nicio intrebare. Joaca putin si revino!');
+      return;
+    }
+    state.questions = shuffle(ALL_QUESTIONS.filter(q => wrongIds.includes(q.id)));
+  }
+
+  // Setup option order — shuffle for shuffle/exam/review, keep for variant/poze/online/all
+  state.optionOrder = state.questions.map(q => {
+    if (state.mode === 'shuffle' || state.mode === 'exam' || state.mode === 'review') {
+      return shuffle(q.opts.map((_, i) => i));
+    }
+    return q.opts.map((_, i) => i);
+  });
+
+  document.getElementById('q-total').textContent = state.questions.length;
+  document.getElementById('score-live').style.display = state.isExam ? 'none' : 'flex';
+  document.getElementById('quiz-title-mini').innerHTML = `<strong>${escapeHtml(state.titleLabel)}</strong>`;
+
+  // Mark variant as "in progress" if applicable
+  if (state.mode.startsWith('variant:')) {
+    const vname = state.mode.slice('variant:'.length);
+    if (!stats.variantStatus[vname]) {
+      stats.variantStatus[vname] = 'in_progress';
+      saveStats();
+    }
+  }
+
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+// ============== RENDER QUESTION ==============
+function renderQuestion() {
+  const idx = state.currentIdx;
+  const q = state.questions[idx];
+  const order = state.optionOrder[idx];
+
+  const card = document.getElementById('question-card');
+  const letters = ['A', 'B', 'C', 'D'];
+
+  const isLocked = !!state.answered[idx];
+  const selectedOptIdx = state.selected[idx];
+
+  let optionsHTML = '';
+  order.forEach((origIdx, displayIdx) => {
+    let cls = 'option';
+    if (isLocked && state.showFeedback) {
+      if (origIdx === q.a) cls += ' correct locked';
+      else if (origIdx === selectedOptIdx) cls += ' incorrect locked';
+      else cls += ' locked';
+    } else {
+      if (selectedOptIdx === origIdx) cls += ' selected';
+    }
+
+    const indicator = isLocked && state.showFeedback
+      ? (origIdx === q.a ? '<span class="indicator">corect</span>'
+         : (origIdx === selectedOptIdx ? '<span class="indicator">gresit</span>' : ''))
+      : '';
+
+    optionsHTML += `
+      <button class="${cls}" data-orig="${origIdx}" data-display="${displayIdx}">
+        <span class="letter">${letters[displayIdx]}</span>
+        <span class="opt-text">${escapeHtml(q.opts[origIdx])}</span>
+        ${indicator}
+      </button>
+    `;
+  });
+
+  let feedbackHTML = '';
+  if (isLocked && state.showFeedback) {
+    const correctLetter = letters[order.indexOf(q.a)];
+    const wasCorrect = selectedOptIdx === q.a;
+    feedbackHTML = `
+      <div class="feedback show">
+        <div class="label">${wasCorrect ? '✓ Raspuns corect' : '✗ Raspuns gresit'}</div>
+        <div class="text">${wasCorrect ? 'Foarte bine.' : 'Varianta corecta este ' + correctLetter + ': ' + escapeHtml(q.opts[q.a])}</div>
+      </div>
+    `;
+  }
+
+  card.innerHTML = `
+    <div class="q-meta">
+      <span class="q-number">Nr. ${idx + 1}</span>
+      <span class="q-category">${escapeHtml(q.source)}</span>
+    </div>
+    <div class="q-text">${escapeHtml(q.q)}</div>
+    <div class="options">${optionsHTML}</div>
+    ${feedbackHTML}
+  `;
+
+  card.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => selectOption(parseInt(btn.dataset.orig)));
+  });
+
+  document.getElementById('q-current').textContent = idx + 1;
+  document.getElementById('progress-fill').style.width = ((idx + 1) / state.questions.length * 100) + '%';
+
+  const correctSoFar = Object.entries(state.answered).filter(
+    ([qIdx]) => state.selected[qIdx] === state.questions[qIdx].a
+  ).length;
+  document.getElementById('score-live').querySelector('strong').textContent = correctSoFar;
+
+  document.getElementById('prev-btn').disabled = idx === 0;
+  const nextBtn = document.getElementById('next-btn');
+  const skipBtn = document.getElementById('skip-btn');
+
+  nextBtn.textContent = (idx === state.questions.length - 1) ? 'Finalizeaza →' : 'Urmatoarea →';
+
+  if (state.isExam) {
+    skipBtn.style.display = 'none';
+  } else {
+    skipBtn.style.display = isLocked ? 'none' : 'inline-block';
+  }
+}
+
+// ============== SELECT OPTION ==============
+function selectOption(origIdx) {
+  const qIdx = state.currentIdx;
+
+  if (state.isExam) {
+    state.selected[qIdx] = origIdx;
+    renderQuestion();
+    return;
+  }
+
+  if (state.answered[qIdx]) return;
+
+  const q = state.questions[qIdx];
+  state.selected[qIdx] = origIdx;
+  state.answered[qIdx] = true;
+
+  const wasCorrect = origIdx === q.a;
+
+  const pq = stats.perQuestion[q.id] || { attempts: 0, correct: 0, lastResult: null };
+  pq.attempts += 1;
+  if (wasCorrect) pq.correct += 1;
+  pq.lastResult = wasCorrect ? 'right' : 'wrong';
+  stats.perQuestion[q.id] = pq;
+
+  stats.totalAnswered += 1;
+  if (wasCorrect) {
+    stats.totalCorrect += 1;
+    stats.streak += 1;
+    if (stats.streak > stats.bestStreak) stats.bestStreak = stats.streak;
+  } else {
+    stats.streak = 0;
+  }
+  saveStats();
+
+  renderQuestion();
+}
+
+// ============== NAVIGATION ==============
+function goNext() {
+  if (state.currentIdx >= state.questions.length - 1) {
+    finishQuiz();
+    return;
+  }
+  state.currentIdx += 1;
+  renderQuestion();
+}
+
+function goPrev() {
+  if (state.currentIdx === 0) return;
+  state.currentIdx -= 1;
+  renderQuestion();
+}
+
+function skipQuestion() {
+  if (state.currentIdx >= state.questions.length - 1) {
+    finishQuiz();
+    return;
+  }
+  state.currentIdx += 1;
+  renderQuestion();
+}
+
+// ============== FINISH ==============
+function finishQuiz() {
+  if (state.isExam) {
+    state.questions.forEach((q, idx) => {
+      if (state.selected[idx] !== undefined) {
+        state.answered[idx] = true;
+        const wasCorrect = state.selected[idx] === q.a;
+        const pq = stats.perQuestion[q.id] || { attempts: 0, correct: 0, lastResult: null };
+        pq.attempts += 1;
+        if (wasCorrect) pq.correct += 1;
+        pq.lastResult = wasCorrect ? 'right' : 'wrong';
+        stats.perQuestion[q.id] = pq;
+        stats.totalAnswered += 1;
+        if (wasCorrect) {
+          stats.totalCorrect += 1;
+          stats.streak += 1;
+          if (stats.streak > stats.bestStreak) stats.bestStreak = stats.streak;
+        } else {
+          stats.streak = 0;
+        }
+      }
+    });
+    saveStats();
+  }
+
+  let correct = 0, wrong = 0, skipped = 0;
+  state.questions.forEach((q, idx) => {
+    if (state.selected[idx] === undefined) skipped++;
+    else if (state.selected[idx] === q.a) correct++;
+    else wrong++;
+  });
+
+  // Update variant status if applicable
+  if (state.mode.startsWith('variant:') && skipped === 0) {
+    const vname = state.mode.slice('variant:'.length);
+    if (correct === state.questions.length) {
+      stats.variantStatus[vname] = 'perfect';
+    } else {
+      stats.variantStatus[vname] = 'done';
+    }
+    saveStats();
+  }
+
+  const total = state.questions.length;
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+  document.getElementById('results-label').textContent = state.titleLabel || 'Rezultat final';
+  document.getElementById('final-score').textContent = correct;
+  document.getElementById('final-total').textContent = total;
+  document.getElementById('final-percent').textContent = pct + '%';
+  document.getElementById('final-correct').textContent = correct;
+  document.getElementById('final-wrong').textContent = wrong;
+  document.getElementById('final-skipped').textContent = skipped;
+
+  const msg = document.getElementById('results-message');
+  if (pct === 100) msg.textContent = 'Punctaj maxim. Esti pregatit pentru examen.';
+  else if (pct >= 85) msg.textContent = 'Foarte bine. Cateva detalii in plus si esti gata.';
+  else if (pct >= 70) msg.textContent = 'Decent. Reia capitolele unde ai gresit.';
+  else if (pct >= 50) msg.textContent = 'Sub asteptari. Insista pe definitii si principii.';
+  else msg.textContent = 'Mai e mult de invatat. Incepe cu Varianta I si ia-o sistematic.';
+
+  renderReviewList('all');
+  showScreen('screen-results');
+}
+
+// ============== REVIEW LIST ==============
+function renderReviewList(filter) {
+  const list = document.getElementById('review-list');
+  let html = '';
+
+  state.questions.forEach((q, idx) => {
+    const sel = state.selected[idx];
+    const isCorrect = sel === q.a;
+    const wasAnswered = sel !== undefined;
+
+    if (filter === 'wrong' && (isCorrect || !wasAnswered)) return;
+    if (filter === 'right' && !isCorrect) return;
+
+    const userAnsText = wasAnswered ? escapeHtml(q.opts[sel]) : '(nu a fost raspuns)';
+    const correctAnsText = escapeHtml(q.opts[q.a]);
+
+    let statusHtml;
+    if (!wasAnswered) statusHtml = '<span class="status no">Sarit</span>';
+    else if (isCorrect) statusHtml = '<span class="status ok">Corect</span>';
+    else statusHtml = '<span class="status no">Gresit</span>';
+
+    let answerHtml = '';
+    if (isCorrect) answerHtml = `Raspunsul tau: ${userAnsText}`;
+    else answerHtml = `Tu: ${userAnsText} · <span style="color:var(--green)">Corect: ${correctAnsText}</span>`;
+
+    html += `
+      <div class="review-item">
+        <div class="num">${idx + 1}</div>
+        <div class="body">
+          <div class="q">${escapeHtml(q.q)}</div>
+          <div class="a">${answerHtml}</div>
+        </div>
+        ${statusHtml}
+      </div>
+    `;
+  });
+
+  if (!html) html = '<div style="text-align:center; color:var(--ink-muted); padding:24px; font-style:italic;">Niciun element in acest filtru.</div>';
+  list.innerHTML = html;
+}
+
+// ============== EVENTS ==============
+document.querySelectorAll('.mode-card').forEach(c => {
+  c.addEventListener('click', () => startMode(c.dataset.mode));
+});
+
+document.getElementById('back-home').addEventListener('click', () => {
+  renderHome();
+  showScreen('screen-home');
+});
+document.getElementById('home-btn-float').addEventListener('click', () => {
+  renderHome();
+  showScreen('screen-home');
+});
+document.getElementById('results-home-btn').addEventListener('click', () => {
+  renderHome();
+  showScreen('screen-home');
+});
+
+document.getElementById('next-btn').addEventListener('click', goNext);
+document.getElementById('prev-btn').addEventListener('click', goPrev);
+document.getElementById('skip-btn').addEventListener('click', skipQuestion);
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+  if (!state.mode) return;
+  if (state.mode.startsWith('variant:')) startMode('variant', state.mode.slice('variant:'.length));
+  else startMode(state.mode);
+});
+
+document.getElementById('reset-stats').addEventListener('click', resetStats);
+
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    renderReviewList(chip.dataset.filter);
+  });
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('screen-quiz').classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  const idx = state.currentIdx;
+  const q = state.questions[idx];
+  if (!q) return;
+  const order = state.optionOrder[idx];
+
+  if (e.key >= '1' && e.key <= '4') {
+    const displayIdx = parseInt(e.key) - 1;
+    if (displayIdx < order.length) {
+      selectOption(order[displayIdx]);
+      e.preventDefault();
+    }
+  } else if (e.key === 'Enter' || e.key === 'ArrowRight') {
+    goNext();
+    e.preventDefault();
+  } else if (e.key === 'ArrowLeft') {
+    goPrev();
+    e.preventDefault();
+  } else if (e.key.toLowerCase() === 's') {
+    skipQuestion();
+    e.preventDefault();
+  }
+});
+
+// ============== INIT ==============
+loadStats();
+renderHome();
+
+</script>
+
+</body>
+</html>
