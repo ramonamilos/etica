@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz FIS + IP Extras — 83 întrebări</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080d1a;--surf:rgba(255,255,255,0.04);--surf2:rgba(255,255,255,0.08);
+  --brd:rgba(255,255,255,0.09);--acc:#0ea5e9;--accD:#0284c7;
+  --text:#e2e8f0;--mut:#94a3b8;--dim:#475569;
+  --grn:#22c55e;--red:#ef4444;--yel:#f59e0b;
+  --grn-t:rgba(34,197,94,0.10);--red-t:rgba(239,68,68,0.08);--acc-t:rgba(14,165,233,0.12);
+  --mNew:#64748b;--mLearn:#3b82f6;--mWeak:#ef4444;--mMast:#22c55e;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+.hidden{display:none!important}
+.page{max-width:720px;margin:0 auto;padding:16px 16px 60px}
+.card{background:var(--surf);border:1px solid var(--brd);border-radius:16px;padding:18px 22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;
+  border-radius:10px;border:1px solid var(--brd);background:transparent;color:var(--mut);
+  cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;font-family:inherit}
+.btn:hover{background:var(--surf2);color:var(--text)}
+.btn.act{border-color:var(--acc);background:var(--acc-t);color:#7dd3fc;font-weight:600}
+.btn-p{width:100%;padding:14px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--acc),var(--accD));color:#fff;font-size:15px;
+  font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 20px rgba(14,165,233,.3);
+  transition:opacity .15s}
+.btn-p:hover{opacity:.9}
+.btn-p:disabled{background:var(--surf);color:var(--dim);box-shadow:none;cursor:not-allowed}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--brd);background:transparent;
+  color:var(--mut);cursor:pointer;font-size:12px;font-family:inherit;transition:all .15s}
+.chip:hover{color:var(--text);border-color:var(--dim)}
+.chip.sel{border-color:var(--acc);background:var(--acc-t);color:#7dd3fc;font-weight:600}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:11px;font-weight:600}
+.b-fis{background:rgba(14,165,233,.1);color:#38bdf8;border:1px solid rgba(14,165,233,.25)}
+.b-ip{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.25)}
+.b-warn{background:rgba(234,179,8,.1);color:#fbbf24;border:1px solid rgba(234,179,8,.25)}
+.b-topic{background:var(--surf);color:var(--mut);border:1px solid var(--brd)}
+.b-new{background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.3)}
+.b-mNew{background:rgba(100,116,139,.12);color:var(--mNew);border:1px solid rgba(100,116,139,.25)}
+.b-mLearn{background:rgba(59,130,246,.12);color:var(--mLearn);border:1px solid rgba(59,130,246,.25)}
+.b-mWeak{background:rgba(239,68,68,.12);color:var(--mWeak);border:1px solid rgba(239,68,68,.25)}
+.b-mMast{background:rgba(34,197,94,.12);color:var(--mMast);border:1px solid rgba(34,197,94,.25)}
+.prog-bar{height:4px;background:var(--brd);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--acc),#38bdf8);border-radius:2px;transition:width .25s}
+.prog-multi{height:6px;background:var(--brd);border-radius:3px;overflow:hidden;display:flex}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.stat-c{padding:10px 12px;border-radius:14px;border:1px solid}
+.stat-n{font-size:20px;font-weight:800}
+.stat-l{font-size:11px;color:var(--mut);margin-top:2px}
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.q-btn{padding:14px 16px;border-radius:14px;border:1px solid var(--brd);background:var(--surf);
+  cursor:pointer;text-align:left;font-family:inherit;transition:all .15s}
+.q-btn:hover{background:var(--surf2)}
+.q-btn .ic{font-size:22px;margin-bottom:6px}
+.q-btn .ti{font-size:14px;font-weight:700;color:var(--text);display:block}
+.q-btn .su{font-size:11px;color:var(--mut);margin-top:2px;display:block}
+.q-btn.prim{background:linear-gradient(135deg,var(--acc),var(--accD));border:none}
+.q-btn.prim .ti,.q-btn.prim .su{color:#fff}
+.q-btn.prim .su{opacity:.8}
+.q-btn.rd{border-color:rgba(239,68,68,.3);background:rgba(239,68,68,.06)}
+.q-btn.rd .ti{color:#f87171}
+.q-btn.gr{border-color:rgba(100,116,139,.3);background:rgba(100,116,139,.06)}
+.q-btn.gr .ti{color:var(--mut)}
+.f-lbl{font-size:11px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px}
+.quiz-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.opt-btn{display:flex;align-items:flex-start;gap:10px;padding:13px 16px;border-radius:12px;
+  border:1px solid var(--brd);background:var(--surf);color:var(--text);cursor:pointer;
+  font-size:14px;line-height:1.5;text-align:left;width:100%;font-family:inherit;transition:all .12s}
+.opt-btn:hover:not(:disabled){background:var(--surf2);border-color:var(--dim)}
+.opt-btn.sel{background:var(--acc-t);border-color:rgba(14,165,233,.5);color:#7dd3fc}
+.opt-btn.ok{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.4);color:#86efac}
+.opt-btn.ng{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.4);color:#fca5a5}
+.opt-btn.fd{color:var(--dim)}
+.oc{min-width:22px;height:22px;border-radius:50%;border:1px solid var(--dim);display:flex;
+  align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--dim);flex-shrink:0}
+.opt-btn.sel .oc{border-color:var(--acc);background:rgba(14,165,233,.2);color:#7dd3fc}
+.opt-btn.ok .oc{border-color:var(--grn);background:rgba(34,197,94,.2);color:var(--grn)}
+.opt-btn.ng .oc{border-color:var(--red);background:rgba(239,68,68,.2);color:var(--red)}
+.exp-toggle{background:none;border:1px solid var(--brd);border-radius:8px;padding:5px 12px;
+  color:var(--mut);cursor:pointer;font-size:12px;font-family:inherit;margin-bottom:8px}
+.exp-box{padding:14px 16px;border-radius:12px;background:rgba(14,165,233,.05);
+  border:1px solid rgba(14,165,233,.15);margin-bottom:12px}
+.rv-item{padding:12px 16px;border-radius:12px;margin-bottom:8px;border:1px solid}
+.rv-ok{background:rgba(34,197,94,.04);border-color:rgba(34,197,94,.2)}
+.rv-ng{background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.2)}
+.tp-row{margin-bottom:10px}
+.tp-top{display:flex;justify-content:space-between;margin-bottom:3px}
+.st-topic{margin-bottom:14px}
+.st-head{display:flex;justify-content:space-between;margin-bottom:4px}
+.alert{padding:12px 16px;border-radius:12px;font-size:13px;margin-bottom:14px;line-height:1.6}
+.alert-warn{background:rgba(234,179,8,.07);border:1px solid rgba(234,179,8,.2);color:#fbbf24}
+.alert-blue{background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.2);color:#7dd3fc}
+.bot-nav{display:flex;gap:8px;margin-top:16px}
+.fc-card{background:var(--surf);border:1px solid var(--brd);border-radius:18px;min-height:220px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  padding:24px;cursor:pointer;user-select:none;position:relative;margin-bottom:14px}
+.fc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fc-no{padding:13px;border-radius:12px;border:1px solid rgba(239,68,68,.3);
+  background:rgba(239,68,68,.08);color:#f87171;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.fc-yes{padding:13px;border-radius:12px;border:1px solid rgba(34,197,94,.3);
+  background:rgba(34,197,94,.08);color:#4ade80;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div id="s-home">
+  <div style="background:linear-gradient(180deg,rgba(14,165,233,.15) 0%,transparent 100%);border-bottom:1px solid var(--brd);padding:28px 20px 22px">
+    <div class="page" style="padding-bottom:0">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+        <span style="font-size:32px">🖥️</span>
+        <div>
+          <div style="font-size:22px;font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,#38bdf8,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Quiz FIS + IP Extras</div>
+          <div style="font-size:13px;color:var(--mut)">83 întrebări · FIS (76) + SubFIS extras (7) · UPT</div>
+        </div>
+      </div>
+      <div class="stat-grid" id="stat-grid"></div>
+      <div class="prog-multi" style="margin-top:10px" id="overall-bar"></div>
+    </div>
+  </div>
+
+  <div class="page" style="padding-top:18px">
+    <div class="q-grid">
+      <button class="q-btn prim" onclick="quickStart('smart')">
+        <div class="ic">🧠</div><span class="ti">Mod Smart</span><span class="su">Prioritizează punctele slabe</span>
+      </button>
+      <button class="q-btn" onclick="quickStart('all')">
+        <div class="ic">🎲</div><span class="ti">Toate întrebările</span><span class="su">Ordine aleatorie</span>
+      </button>
+      <button class="q-btn rd" onclick="quickStart('weak')">
+        <div class="ic">🔥</div><span class="ti" id="lbl-weak">De revăzut</span><span class="su">Numai greșitele</span>
+      </button>
+      <button class="q-btn gr" onclick="quickStart('new')">
+        <div class="ic">✨</div><span class="ti" id="lbl-new">Noi</span><span class="su">Întrebări nevăzute</span>
+      </button>
+    </div>
+
+    <div class="card" style="margin-bottom:14px">
+      <div style="font-size:13px;font-weight:700;color:var(--acc);margin-bottom:14px">⚙️ Filtrare personalizată</div>
+      <span class="f-lbl">Capitol</span>
+      <div class="chip-row" id="topic-chips"></div>
+      <span class="f-lbl" style="margin-top:8px">Mod</span>
+      <div class="chip-row" id="mode-chips"></div>
+      <div style="font-size:12px;color:var(--dim);margin:10px 0 12px" id="filter-count"></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn-p" id="btn-start" onclick="startQuiz(false)" style="flex:1">🚀 Start</button>
+        <button class="btn" id="btn-fc" onclick="startQuiz(true)" style="padding:13px 18px;font-size:14px">🃏 Flashcard</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <button class="btn" onclick="showScreen('stats')" style="flex:1;padding:10px;justify-content:center">📊 Statistici</button>
+      <button class="btn" onclick="doReset()" style="padding:10px 16px;color:#f87171;border-color:rgba(239,68,68,.2)">🗑️ Reset</button>
+    </div>
+
+    <div class="alert alert-blue">
+      ℹ️ <strong>FIS</strong> = Fundamente ale Ingineriei Sistemelor · Curs diferit față de MPSAM/IP · Teme: modele ciclu viață, arhitecturi, cerințe, testare, mentenanță, reutilizare, Agile/XP
+    </div>
+    <div class="alert alert-warn">
+      ⚠️ Unele răspunsuri din FIS sunt marcate cu „not sure" în document original. Acestea sunt notate în explicații.
+    </div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="s-quiz" class="hidden page">
+  <div class="quiz-hdr">
+    <button class="btn" onclick="showScreen('home')" style="padding:6px 12px;font-size:13px">← Meniu</button>
+    <div style="display:flex;gap:16px;align-items:center">
+      <span style="font-size:13px;color:#4ade80;font-weight:700" id="q-score">✓ 0</span>
+      <span style="font-size:13px;color:var(--dim)" id="q-pos">1/83</span>
+    </div>
+  </div>
+  <div class="prog-bar" style="margin-bottom:16px"><div class="prog-fill" id="q-prog" style="width:0%"></div></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px" id="q-badges"></div>
+  <div class="card" style="margin-bottom:12px"><p id="q-text" style="font-size:15px;line-height:1.65;font-weight:500"></p></div>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px" id="q-opts"></div>
+  <button class="exp-toggle hidden" id="exp-tog" onclick="toggleExp()">▼ Arată explicația</button>
+  <div class="exp-box hidden" id="exp-box">
+    <p style="font-size:13px;line-height:1.6;color:var(--text)" id="exp-txt"></p>
+    <p style="font-size:11px;margin-top:6px" id="exp-st"></p>
+  </div>
+  <button class="btn-p" id="q-act" onclick="handleAction()">Confirmă răspunsul</button>
+</div>
+
+<!-- FLASHCARD -->
+<div id="s-fc" class="hidden page">
+  <div class="quiz-hdr">
+    <button class="btn" onclick="showScreen('home')" style="padding:6px 12px;font-size:13px">← Meniu</button>
+    <span style="font-size:13px;color:var(--dim)" id="fc-pos">1/83</span>
+  </div>
+  <div class="prog-bar" style="margin-bottom:16px"><div class="prog-fill" id="fc-prog" style="width:0%"></div></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px" id="fc-badges"></div>
+  <div class="fc-card" id="fc-card" onclick="flipCard()">
+    <div id="fc-front">
+      <div id="fc-sub" style="font-size:11px;color:var(--dim);margin-bottom:8px"></div>
+      <p id="fc-q" style="font-size:16px;font-weight:600;line-height:1.6"></p>
+      <div style="font-size:12px;color:var(--dim);margin-top:10px">Apasă pentru răspuns →</div>
+    </div>
+    <div id="fc-back" class="hidden">
+      <div style="font-size:11px;color:#4ade80;margin-bottom:8px">✓ Răspuns corect</div>
+      <p id="fc-ans" style="font-size:15px;color:#86efac;font-weight:600;line-height:1.5"></p>
+      <p id="fc-exp" style="font-size:13px;color:var(--mut);margin-top:10px;line-height:1.5"></p>
+    </div>
+    <span class="badge" id="fc-mast" style="position:absolute;top:14px;right:14px"></span>
+  </div>
+  <div class="fc-actions hidden" id="fc-acts">
+    <button class="fc-no" onclick="fcAns(false)">✗ Nu știam</button>
+    <button class="fc-yes" onclick="fcAns(true)">✓ Știam</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="s-results" class="hidden page">
+  <div style="text-align:center;margin-bottom:24px">
+    <div style="font-size:52px;margin-bottom:8px" id="res-ico">🏆</div>
+    <div style="font-size:28px;font-weight:800;background:linear-gradient(135deg,#38bdf8,var(--acc));-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="res-sc"></div>
+    <div style="color:var(--mut);margin-top:4px" id="res-msg"></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-size:12px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Rezultate pe capitol</div>
+    <div id="res-topics"></div>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:12px">
+    <button class="btn" id="rf-all" onclick="setRF('all')" style="flex:1">Toate</button>
+    <button class="btn" id="rf-wrong" onclick="setRF('wrong')" style="flex:1">❌ Greșite</button>
+    <button class="btn" id="rf-right" onclick="setRF('right')" style="flex:1">✅ Corecte</button>
+  </div>
+  <div id="rv-list"></div>
+  <div class="bot-nav">
+    <button class="btn" onclick="showScreen('home')" style="flex:1;padding:13px;justify-content:center">← Meniu</button>
+    <button class="btn-p" onclick="startWeak()" style="flex:1">🔄 Reia greșelile</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div id="s-stats" class="hidden page">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+    <button class="btn" onclick="showScreen('home')" style="padding:6px 12px;font-size:13px">←</button>
+    <h2 style="font-size:18px;font-weight:700">📊 Progresul tău</h2>
+  </div>
+  <div class="stat-grid" id="st-ov" style="margin-bottom:16px"></div>
+  <div class="card" style="margin-bottom:14px">
+    <div style="font-size:12px;color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Detalii pe capitol</div>
+    <div id="st-topics"></div>
+  </div>
+  <div class="card hidden" id="st-weak-box">
+    <div style="font-size:12px;color:#f87171;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">🔥 Întrebări de revăzut</div>
+    <div id="st-weak"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// ÎNTREBĂRI
+// ══════════════════════════════════════════════════════════════
+const Q = [
+  // ─── FIS: MODELE DE CICLU DE VIAȚĂ ───────────────────────────────────────
+  {id:1,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"La angajarea unui programator pentru un proiect estimat la 3 luni, cel mai important factor de luat în calcul este:",
+   opts:["Educația","Abilitățile comunicaționale","Experiența în limbajul de programare"],
+   correct:2,
+   exp:"Pentru proiecte scurte (3 luni), experiența în limbajul de programare specific proiectului este decisivă — nu există timp de ucenicie.",
+   status:"✅"},
+
+  {id:2,src:"FIS",topic:"Estimare Costuri",
+   text:"Care factor influențează decizia de creștere a prețului unui sistem la încheierea unui contract?",
+   opts:["Oportunități de piață","Imprecizia estimării costurilor","Situația financiară dificilă"],
+   correct:1,
+   exp:"Imprecizia estimării costurilor forțează adăugarea unui factor de risc la prețul final, pentru a acoperi incertitudinile.",
+   status:"✅"},
+
+  {id:3,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care este cea mai probabilă cauză de degradare a performanței unui sistem organizat după un model pe niveluri (mașină abstractă)?",
+   opts:["Nivelurile superioare pot depinde direct de servicii oferite de nivelurile de mai jos (ocolind nivelurile intermediare)","Numărul prea mare de niveluri","Comunicarea sincronă între niveluri"],
+   correct:0,
+   exp:"În modelul pe niveluri, fiecare nivel ar trebui să acceseze DOAR nivelul imediat inferior. Dacă nivelurile superioare sar peste intermediare, coeziunea arhitecturii și performanța degradează.",
+   status:"✅"},
+
+  {id:4,src:"FIS",topic:"Arhitecturi Software",
+   text:"Subsistemele unui sistem distribuit, organizat după un model cu zonă de date partajată, pot schimba date prin:",
+   opts:["O bază de date centrală accesibilă tuturor subsistemelor","Mesaje transmise direct între subsisteme","Un server intermediar de mesaje (message broker)"],
+   correct:0,
+   exp:"Modelul cu zonă de date partajată (shared data/repository): toate subsistemele accesează o BAZĂ DE DATE CENTRALĂ comună. Avantaj: consistența datelor. Dezavantaj: goulot de strangulare și dificultăți în politici specifice per subsistem.",
+   status:"✅"},
+
+  {id:5,src:"FIS",topic:"Metode Agile",
+   text:"În cazul Extreme Programming, testarea de la început presupune:",
+   opts:["Selectarea prioritară a setului minimal de funcționalități esențiale","Scrierea testelor pentru funcționalități înainte de implementarea respectivelor funcționalități","Limitarea proiectării la suportul cerințelor curente"],
+   correct:1,
+   exp:"Test-Driven Development (TDD) — principiu fundamental XP: se scriu ÎNTÂI testele, APOI codul care le face să treacă. Varianta a = prioritizarea backlog-ului. Varianta c = YAGNI (You Aren't Gonna Need It).",
+   status:"✅"},
+
+  {id:6,src:"FIS",topic:"Testare Software",
+   text:"Lista de inspecție reprezintă:",
+   opts:["Lista cu erori frecvente în limbajul de implementare ales","Lista de materiale necesare procesului de inspecție","Lista programatorilor implicați în procesul de inspecție"],
+   correct:0,
+   exp:"Lista de inspecție (checklist) = catalog cu ERORI TIPICE/FRECVENTE în limbajul sau domeniul respectiv. Ghidează inspectorii în căutarea defectelor cunoscute. Nu e o listă de materiale sau de persoane.",
+   status:"✅"},
+
+  {id:7,src:"FIS",topic:"Cerințe Software",
+   text:"Constrângerile unui sistem reprezintă cerințe:",
+   opts:["Non-funcționale","Funcționale","De domeniu"],
+   correct:0,
+   exp:"Constrângerile (timp de răspuns, memorie, platformă, standarde obligatorii) sunt cerințe NON-FUNCȚIONALE — nu descriu CE face sistemul, ci CUM trebuie să se comporte sau în ce condiții trebuie să opereze.",
+   status:"✅"},
+
+  {id:8,src:"FIS",topic:"Cerințe Software",
+   text:"Cui NU îi sunt folositoare cerințele sistem rezultate în urma analizei cerințelor?",
+   opts:["Managerilor de contracte","Proiectanților de sistem","Programatorilor"],
+   correct:0,
+   exp:"Managerilor de contracte le sunt utile cerințele CLIENT (utilizator), nu cerințele de sistem tehnice detaliate. Proiectanților și programatorilor le sunt utile direct cerințele sistem.",
+   status:"✅"},
+
+  {id:9,src:"FIS",topic:"Modelare",
+   text:"Care sunt elementele de modelare dintr-o diagramă entitate-relație?",
+   opts:["Entități, relații și atribute","Clase, obiecte și metode","Actori, cazuri de utilizare și relații"],
+   correct:0,
+   exp:"Diagrama ER (entitate-relație): ENTITĂȚI (obiecte din domeniu), RELAȚII (asocieri între entități), ATRIBUTE (proprietăți ale entităților și relațiilor). Este baza modelării bazelor de date relaționale.",
+   status:"✅"},
+
+  {id:10,src:"FIS",topic:"Analiză Statică",
+   text:"Procesul de analiză NU poate depista:",
+   opts:["Timpul de execuție a unei funcții statice","Variabilele nedeclarate","Bucle infinite"],
+   correct:0,
+   exp:"Analiza statică inspectează CODUL SURSĂ fără a-l executa. Prin definiție, NU poate determina comportamente dinamice precum TIMPUL DE EXECUȚIE (care depinde de date de intrare și hardware).",
+   status:"✅"},
+
+  {id:11,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"Care din următoarele caracteristici NU reprezintă un avantaj al modelelor în cascadă?",
+   opts:["Modificarea cerințelor este ușor de gestionat","Fazele și procesele sunt terminate una după alta","Modelul este simplu de utilizat"],
+   correct:0,
+   exp:"Cascada este RIGIDĂ la schimbări — dacă cerințele se modifică după ce o fază e terminată, întoarcerea costă mult. Aceasta este principalul DEZAVANTAJ al modelului în cascadă, nu un avantaj.",
+   status:"✅"},
+
+  {id:12,src:"FIS",topic:"Testare Software",
+   text:"Care din următoarele afirmații privind fazele de dezvoltare a unui produs software este adevărată?",
+   opts:["Testarea și validarea se aplică la toate fazele de dezvoltare a unui sistem software","Testarea se face exclusiv în faza de implementare","Validarea se face exclusiv la finalul proiectului"],
+   correct:0,
+   exp:"Testarea și validarea sunt activități CONTINUE — se aplică la FIECARE fază: validarea cerințelor, validarea proiectării, testarea codului, testarea de integrare, testarea de sistem. Nu sunt rezervate unei singure faze.",
+   status:"✅"},
+
+  {id:13,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"La modelul în V, planificarea integrării sistemului se face în faza de:",
+   opts:["Integrare componente și testare","Analiză cerințe sistem","Proiectare la nivel înalt"],
+   correct:2,
+   exp:"Modelul V: fiecare fază de proiectare are o fază de testare corespunzătoare. Planificarea testelor de integrare se face în faza de PROIECTARE LA NIVEL ÎNALT (arhitecturală), nu în faza de integrare propriu-zisă.",
+   status:"✅"},
+
+  {id:14,src:"FIS",topic:"Modelare",
+   text:"La diagramele Use-Case, legătura dintre un actor și un use-case poate fi de tip:",
+   opts:["Comunicare (comunicație/asociere)","Incluziune","Extindere"],
+   correct:0,
+   exp:"Actorii sunt legați de use-case-uri prin relații de COMUNICARE (asociere/communication). Incluziunea și extinderea sunt relații ÎNTRE use-case-uri, nu între actori și use-case-uri.",
+   status:"✅"},
+
+  {id:15,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"La un ciclu de viață iterativ, prin creșteri succesive (increments) se înțelege:",
+   opts:["Versiuni noi ale produsului la sfârșitul fiecărei iterații","Adăugarea succesivă de funcționalități noi fiecare iterație","Repetarea acelorași faze de dezvoltare"],
+   correct:0,
+   exp:"Increment = livrarea unei versiuni noi a produsului la finalul fiecărei iterații. Fiecare increment adaugă sau perfecționează funcționalități. Clientul primește valoare după fiecare iterație.",
+   status:"✅"},
+
+  {id:16,src:"FIS",topic:"Inginerie Software",
+   text:"Care este diferența principală între ingineria software și ramurile inginerești tradiționale?",
+   opts:["Permite modificarea drastică a cerințelor în timpul dezvoltării","Implică mai multă documentație","Necesită cunoștințe matematice mai avansate"],
+   correct:0,
+   exp:"Spre deosebire de construcții sau inginerie mecanică, în software cerințele se pot schimba DRASTIC în timpul dezvoltării și costul modificărilor nu crește exponențial. Aceasta este caracteristica definitorie.",
+   status:"✅"},
+
+  {id:17,src:"FIS",topic:"Modelare",
+   text:"Diagrama de context este o reprezentare din cadrul unei diagrame:",
+   opts:["Entitate-relație (ER)","De flux de date (DFD)","De utilizare (use case)"],
+   correct:1,
+   exp:"Diagrama de context = primul nivel al DFD (Data Flow Diagram) — arată sistemul ca un singur proces și toate entitățile externe cu care interacționează. Nu este ER și nu este use case.",
+   status:"✅"},
+
+  {id:18,src:"FIS",topic:"Estimare Costuri",
+   text:"La estimarea costului unui sistem software, cel mai important factor în majoritatea cazurilor este:",
+   opts:["Costul efortului personalului","Costul licențelor software","Costul infrastructurii hardware"],
+   correct:0,
+   exp:"În software, 60-80% din costul unui proiect este reprezentat de COSTUL EFORTULUI PERSONALULUI (salarii, beneficii, management). Hardware și licențele sunt costuri secundare.",
+   status:"✅"},
+
+  {id:19,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care din următoarele caracteristici reprezintă un dezavantaj pentru modelul de organizare cu zonă de date partajată?",
+   opts:["Îngreunează implementarea unor politici de gestiune specifice fiecărui subsistem","Datele nu pot fi partajate eficient","Nu suportă mai mulți utilizatori simultani"],
+   correct:0,
+   exp:"Dezavantaj major al modelului cu date partajate: toate subsistemele TREBUIE să accepte schema de date comună. Dacă un subsistem are nevoie de politici specifice (ex: caching propriu, validări diferite), acestea sunt greu de implementat.",
+   status:"✅"},
+
+  {id:20,src:"FIS",topic:"Analiză Statică",
+   text:"Care din următorii pași ai analizei statice nu detectează DIRECT anomaliile în cod?",
+   opts:["Analiza interfețelor","Analiza fluxului de control","Analiza utilizării datelor"],
+   correct:0,
+   exp:"Analiza interfețelor verifică consistența semnăturilor funcțiilor/metodelor între module — detectează INCOMPATIBILITĂȚI DE INTERFEȚE, nu anomalii directe în logica codului. ⚠️ Marcat cu 'not sure' în documentul original.",
+   status:"⚠️ Marcat cu incertitudine în documentul original"},
+
+  {id:21,src:"FIS",topic:"Testare Software",
+   text:"Procesul de validare la dezvoltarea unui produs software trebuie să răspundă la întrebarea:",
+   opts:["Construim produsul care trebuie?","Construim produsul corect?","Produsul satisface specificațiile tehnice?"],
+   correct:0,
+   exp:"Validare = 'Construim produsul CARE TREBUIE?' (satisface nevoile clientului?). Verificare = 'Construim produsul CORECT?' (conform specificațiilor). Distincție fundamentală V&V (Verification & Validation).",
+   status:"✅"},
+
+  {id:22,src:"FIS",topic:"Testare Software",
+   text:"Localizarea și înlăturarea unei erori se face în procesul de:",
+   opts:["Depanare (debugging)","Testare","Inspecție de cod"],
+   correct:0,
+   exp:"DEPANAREA = localizarea + înlăturarea erorii. TESTAREA = detectarea prezenței erorilor (nu înlăturarea lor). Inspecția = examinarea statică a codului. Sunt procese distincte.",
+   status:"✅"},
+
+  {id:23,src:"FIS",topic:"Testare Software",
+   text:"Verificarea statică înseamnă:",
+   opts:["Inspectarea codului (fără execuție)","Execuția codului cu date de test","Testarea automată cu unelte specializate"],
+   correct:0,
+   exp:"Verificarea STATICĂ = analiză a codului FĂRĂ EXECUȚIE (inspecție, review, analiză statică automată). Verificarea DINAMICĂ = testarea prin execuție cu date de test.",
+   status:"✅"},
+
+  {id:24,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care dintre următoarele afirmații reprezintă un dezavantaj pentru Modelul Obiectual de descompunere a unui sistem?",
+   opts:["Necesitatea de a schimba interfața unui obiect poate duce ușor la necesitatea de a modifica alte obiecte cu care acesta este cuplat","Obiectele nu pot fi reutilizate","Nu suportă moștenirea"],
+   correct:0,
+   exp:"Cuplaj în modelul obiectual: dacă interfața unui obiect se schimbă, TOATE obiectele care depind de el trebuie actualizate. Acesta este costul ascuns al cuplajului. Avantajul e reutilizarea; dezavantajul e propagarea schimbărilor.",
+   status:"✅"},
+
+  {id:25,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"Datorită coruperii frecvente a structurii sistemului, dezvoltarea incrementală poate genera probleme de:",
+   opts:["Mentenanță","Performanță","Securitate"],
+   correct:0,
+   exp:"La dezvoltarea incrementală, adăugarea continuă de funcționalități fără refactorizare degradează arhitectura în timp (technical debt). Aceasta face MENTENANȚA tot mai costisitoare și dificilă.",
+   status:"✅"},
+
+  {id:26,src:"FIS",topic:"Testare Software",
+   text:"Prototipurile sistemelor software se pot utiliza pentru implementarea testelor:",
+   opts:["Back-to-back (comparație între implementări)","Alfa","Unitare"],
+   correct:0,
+   exp:"Testele BACK-TO-BACK compară ieșirile a două implementări diferite ale aceluiași sistem (ex: versiunea veche vs prototipul nou). Se verifică că ambele produc același output pentru aceleași intrări.",
+   status:"✅"},
+
+  {id:27,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care din următoarele caracteristici ale unui sistem organizat după un model client-server reprezintă un avantaj?",
+   opts:["Este ușor de adăugat noi servere","Serverele nu pot cădea independent","Toți clienții accesează aceleași date simultan"],
+   correct:0,
+   exp:"Avantaj principal al client-server: SCALABILITATE — se pot adăuga noi servere ușor pentru a distribui încărcarea. Serverele pot cădea independent (nu e avantaj, e risc). Accesul simultan e o caracteristică, nu neapărat avantaj.",
+   status:"✅"},
+
+  {id:28,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care tip de model arhitectural evidențiază componentele majore ale unui sistem?",
+   opts:["Model structural","Model comportamental","Model de interacțiune"],
+   correct:0,
+   exp:"Modelul STRUCTURAL (arhitectural) descrie componentele majore și relațiile statice dintre ele. Modelul comportamental descrie dinamica sistemului. Modelul de interacțiune descrie comunicarea între componente.",
+   status:"✅"},
+
+  {id:29,src:"FIS",topic:"Metrici Software",
+   text:"Cumulative Class Dependency (CCD) se folosește pentru:",
+   opts:["Măsurarea complexității unui sistem format din componente","Generarea automată a codului","Planificarea proiectului"],
+   correct:0,
+   exp:"CCD (Cumulative Component Dependency) măsoară complexitatea dependențelor dintr-un sistem de componente — suma tuturor dependențelor directe și tranzitive. Valori mici = sistem mai modular și mentenabil.",
+   status:"✅"},
+
+  {id:30,src:"FIS",topic:"Testare Software",
+   text:"La testarea top-down se folosesc componente de tip:",
+   opts:["Stub","Driver","Mock"],
+   correct:0,
+   exp:"STUB = componentă simplificată care înlocuiește un modul INFERIOR (netestat încă) la testarea top-down. DRIVER = componentă care înlocuiește un modul SUPERIOR la testarea bottom-up. Distincție esențială!",
+   status:"✅"},
+
+  {id:31,src:"FIS",topic:"Inginerie Software",
+   text:"Abstractizarea prin modelare se aplică:",
+   opts:["Atât produselor cât și proceselor software","Exclusiv produselor software","Exclusiv proceselor software"],
+   correct:0,
+   exp:"Abstractizarea prin modelare e universală în IS: se modelează PRODUSELE (diagrame UML, ER, DFD) dar și PROCESELE (modele de ciclu de viață, BPMN, diagrame de activitate).",
+   status:"✅"},
+
+  {id:32,src:"FIS",topic:"Proiectare Software",
+   text:"Care din următoarele întrebări sunt utile la proiectarea unui sistem?",
+   opts:["Care este strategia de control cea mai potrivită?","Câți utilizatori va avea sistemul?","Care este bugetul disponibil?"],
+   correct:0,
+   exp:"La proiectarea arhitecturii unui sistem, întrebările tehnice esențiale includ: strategia de control (centralizată/distribuită/bazată pe evenimente), descompunerea în subsisteme, stilul de comunicare. Bugetul e o constrângere managerială, nu o întrebare de proiectare.",
+   status:"✅"},
+
+  {id:33,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"La un ciclu de viață în cascadă cu reacție, faza de integrare urmează după faza de:",
+   opts:["Implementare","Proiectare","Analiză a cerințelor"],
+   correct:0,
+   exp:"Ordinea în cascadă: Cerințe → Proiectare → IMPLEMENTARE → INTEGRARE → Testare → Operare. Integrarea urmează IMPLEMENTĂRII (după ce modulele sunt codificate, ele se integrează).",
+   status:"✅"},
+
+  {id:34,src:"FIS",topic:"Metode Agile",
+   text:"Care dintre următoarele afirmații NU constituie un avantaj al programării în perechi practicată în Extreme Programming?",
+   opts:["Programarea în perechi evită dezvoltarea prea rapidă a codului, permițând sincronizarea","Îmbunătățește calitatea codului prin revizuire continuă","Transferă cunoștințele în cadrul echipei"],
+   correct:0,
+   exp:"'Evitarea dezvoltării prea rapide' NU este un avantaj — e o formulare negativă artificială. Avantajele reale ale pair programming: calitate mai bună a codului, transfer de cunoștințe, reducerea erorilor, mentorat informal.",
+   status:"✅"},
+
+  {id:35,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care din următoarele denumiri NU se referă la un stil de organizare a unui sistem?",
+   opts:["Stil automat finit cu legături ciclice","Model client-server","Model pipeline"],
+   correct:0,
+   exp:"'Automat finit cu legături ciclice' nu este un stil arhitectural standard. Stilurile arhitecturale standard includ: client-server, pipeline, blackboard, zonă de date partajată, broker, MVC, etc.",
+   status:"✅"},
+
+  {id:36,src:"FIS",topic:"Reutilizare Software",
+   text:"Care din următoarele afirmații relevă o problemă în reutilizarea unor componente software?",
+   opts:["Prin reutilizare crește costul de mentenanță","Reutilizarea reduce calitatea produsului","Componentele reutilizate nu pot fi testate"],
+   correct:0,
+   exp:"Paradoxul reutilizării: deși scade costul de implementare inițial, poate CREȘTE costul de mentenanță — dacă componenta reutilizată se modifică, toate sistemele care o folosesc sunt afectate. Cuplaj ascuns.",
+   status:"✅"},
+
+  {id:37,src:"FIS",topic:"Mentenanță Software",
+   text:"Ce rezolvă mentenanța PERFECTIVĂ a unui sistem software?",
+   opts:["Implementează noi cerințe funcționale sau non-funcționale după începerea operării sistemului","Adaptează funcționarea sistemului pentru platforma clientului după instalarea acestuia","Înlătură defecte de proiectare a sistemului după începerea operării acestuia de către client"],
+   correct:0,
+   exp:"3 tipuri de mentenanță: CORECTIVĂ (înlătură defecte/bug-uri), ADAPTIVĂ (adaptează la mediu nou/platformă nouă), PERFECTIVĂ (adaugă sau îmbunătățește funcționalități la cerere). Perfectivă = evoluție, nu reparare.",
+   status:"✅"},
+
+  {id:38,src:"FIS",topic:"Modelare",
+   text:"Care sunt tipurile de diagrame UML de interacțiune (Interaction)?",
+   opts:["Secvență și Colaborare (Sequence and Collaboration/Communication)","Clase și Obiecte","Activitate și Stare"],
+   correct:0,
+   exp:"UML 2.x — diagrame de interacțiune: Sequence (Secvență), Communication (Comunicare/Colaborare), Timing, Interaction Overview. Clasic (UML 1.x): Secvență + Colaborare.",
+   status:"✅"},
+
+  {id:39,src:"FIS",topic:"Modelare",
+   text:"O diagramă UML de clase modelează:",
+   opts:["Clasificarea unui sistem","Structura unui sistem","Comportamentul unui sistem"],
+   correct:1,
+   exp:"Diagrama de CLASE modelează STRUCTURA unui sistem — clasele, atributele, metodele și relațiile statice dintre ele. Nu modelează comportamentul dinamic (diagrame de secvență, stare) și nici clasificarea per se.",
+   status:"✅"},
+
+  {id:40,src:"FIS",topic:"Testare Software",
+   text:"O componentă tip driver este utilizată la testare pentru:",
+   opts:["A trimite datele și contextul în locul unei componente neimplementate încă (modul superior)","A simula răspunsul unui modul inferior (stub)","A verifica interfețele dintre module"],
+   correct:0,
+   exp:"DRIVER = componentă de test care ÎNLOCUIEȘTE modulul SUPERIOR care apelează modulul testat. Folosit la testarea bottom-up. STUB = înlocuiește modulul INFERIOR apelat de modulul testat. Folosit la testarea top-down.",
+   status:"✅"},
+
+  {id:41,src:"FIS",topic:"Cerințe Software",
+   text:"Cerințele utilizator sunt complete dacă:",
+   opts:["Includ descrieri pentru toate facilitățile cerute de client","Acoperă toate cazurile excepționale","Sunt validate de echipa de dezvoltare"],
+   correct:0,
+   exp:"Cerințele utilizator sunt COMPLETE dacă acoperă TOATE facilitățile pe care clientul le dorește. Completitudinea este o proprietate esențială alături de consistența, corectitudinea și verificabilitatea.",
+   status:"✅"},
+
+  {id:42,src:"FIS",topic:"Modelare",
+   text:"Dacă la o diagramă Use-Case un caz de utilizare depinde necondițonat de realizarea unui alt caz, relația dintre ele este de:",
+   opts:["Extindere (extend)","Incluziune (include)","Generalizare"],
+   correct:1,
+   exp:"INCLUDE (incluziune): un use-case INCLUDE OBLIGATORIU un alt use-case (dependență necondițonată). EXTEND (extindere): un use-case EXTINDE opțional alt use-case (comportament condițional/opțional). ⚠️ Marcat cu 'not sure' în original.",
+   status:"⚠️ Marcat cu incertitudine în documentul original — răspuns: incluziune (include)"},
+
+  {id:43,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"Care din următorii pași NU reprezintă o fază de dezvoltare a unui sistem software?",
+   opts:["Ajustarea și adaptarea","Analiza cerințelor","Proiectarea"],
+   correct:0,
+   exp:"'Ajustarea și adaptarea' nu este o fază standard în niciun model de ciclu de viață. Fazele standard: Cerințe, Proiectare, Implementare, Testare, Integrare, Operare, Mentenanță.",
+   status:"✅"},
+
+  {id:44,src:"FIS",topic:"Cerințe Software",
+   text:"Controlul calității cerințelor va verifica că acestea să fie:",
+   opts:["Consistente","Evazive","Imposibil de modificat"],
+   correct:0,
+   exp:"Proprietățile calitative ale cerințelor: COMPLETE, CONSISTENTE (fără contradicții), CORECTE, VERIFICABILE, REALIZABILE, NECESARE, PRIORITIZATE. 'Evazive' și 'imposibil de modificat' sunt DEFECTE, nu proprietăți dorite.",
+   status:"✅"},
+
+  {id:45,src:"FIS",topic:"Modelare",
+   text:"Prin ce tip de diagramă UML se poate reprezenta un algoritm de calcul?",
+   opts:["Diagrama de clase (Class)","Diagrama de cazuri de utilizare (Use-case)","Diagrama de activitate (Activity)"],
+   correct:2,
+   exp:"Diagrama de ACTIVITATE (Activity Diagram) = echivalentul flowchart-ului în UML. Reprezintă fluxuri de control, decizii, ramificări, activități paralele — perfect pentru algoritmi. Diagrama de secvență arată interacțiunea, nu algoritmul.",
+   status:"✅"},
+
+  {id:46,src:"FIS",topic:"Complexitate Software",
+   text:"La sistemele software formate din componente (distribuite), complexitatea este dată în principal de:",
+   opts:["Numărul de legături directe și de comunicații între componente","Numărul de variabile utilizate","Numărul de instrucțiuni ciclice folosite"],
+   correct:0,
+   exp:"Complexitatea sistemelor distribuite provine din INTERCONECTĂRI: nr. de canale de comunicație, protocoale, sincronizări, dependențe între componente. Nu din variabile sau instrucțiuni individuale.",
+   status:"✅"},
+
+  {id:47,src:"FIS",topic:"Cerințe Software",
+   text:"Care din următoarele cerințe NU reprezintă o cerință non-funcțională?",
+   opts:["Sistemul trebuie implementat în limbajul Java","Sistemul trebuie să ignore valorile negative introduse de utilizator","Sistemul trebuie să proceseze cel puțin 10 intrări pe secundă"],
+   correct:1,
+   exp:"'Sistemul trebuie să IGNORE valorile negative' = cerință FUNCȚIONALĂ (descrie un comportament specific al sistemului față de date de intrare). Java = constrângere de implementare. 10 intrări/s = cerință de performanță (non-funcțională).",
+   status:"✅"},
+
+  {id:48,src:"FIS",topic:"Sisteme Informatice",
+   text:"Sistemele OLTP se folosesc într-o companie la:",
+   opts:["Managementul tactic","Managementul operațional","Managementul strategic"],
+   correct:1,
+   exp:"OLTP (Online Transaction Processing) = procesarea tranzacțiilor zilnice (comenzi, plăți, stocuri) → MANAGEMENT OPERAȚIONAL (nivel de execuție). OLAP (Online Analytical Processing) → management tactic/strategic. ⚠️ Marcat cu incertitudine în original.",
+   status:"⚠️ Marcat cu incertitudine — răspuns: management operațional"},
+
+  {id:49,src:"FIS",topic:"Testare Software",
+   text:"Prin testare software se poate:",
+   opts:["Evidenția împlinirea cerințelor non-funcționale","Evidenția lipsa erorilor","Evidenția prezența erorilor"],
+   correct:2,
+   exp:"Principiu fundamental (Dijkstra): testarea poate DEMONSTRA PREZENȚA erorilor, dar NU absența lor. Testarea exhaustivă e imposibilă. Prin testare poți confirma și cerințe non-funcționale (performanță), dar răspunsul cel mai corect este că evidențiezi PREZENȚA erorilor. ⚠️ Marcat cu 'not sure' în original.",
+   status:"⚠️ Marcat cu incertitudine — răspunsul corect: evidențiezi PREZENȚA erorilor (Dijkstra)"},
+
+  {id:50,src:"FIS",topic:"Planificare Proiect",
+   text:"Rețelele CPM se folosesc la:",
+   opts:["Generarea automată a codului","Proiectarea de nivel înalt","Planificarea proiectului"],
+   correct:2,
+   exp:"CPM (Critical Path Method) = metodă de PLANIFICARE A PROIECTELOR. Identifică calea critică (secvența de activități care determină durata minimă a proiectului). Similar cu PERT. Nu are nicio legătură cu generarea codului sau proiectarea software.",
+   status:"✅"},
+
+  {id:51,src:"FIS",topic:"Proiectare Software",
+   text:"Care dintre următoarele NU este o caracteristică a unui sistem de luat în calcul la proiectare?",
+   opts:["Empatia","Performanța","Mentenabilitatea"],
+   correct:0,
+   exp:"Caracteristicile unui sistem luate în calcul la proiectare: performanță, securitate, fiabilitate, mentenabilitate, portabilitate, disponibilitate, scalabilitate. EMPATIA este o calitate umană, nu o caracteristică de sistem.",
+   status:"✅"},
+
+  {id:52,src:"FIS",topic:"Proiectare Software",
+   text:"Utilizarea la proiectarea unui sistem a unor componente de mici dimensiuni (fine-grained) sprijină:",
+   opts:["Mentenabilitatea","Securitatea","Disponibilitatea"],
+   correct:0,
+   exp:"Componente fine-grained (mici, bine delimitate, cu responsabilitate unică — principiul SRP) → MENTENABILITATE mai bună: ușor de înțeles, testat, modificat individual. Dezavantaj: mai multe interfețe și potențial mai mult overhead.",
+   status:"✅"},
+
+  {id:53,src:"FIS",topic:"Arhitecturi Software",
+   text:"În cazul unui stil de control centralizat, care model este aplicabil sistemelor concurente?",
+   opts:["Modelul 'gestionar' (manager)","Modelul bazat pe evenimente","Modelul blackboard"],
+   correct:0,
+   exp:"Control centralizat pentru sisteme concurente: modelul GESTIONAR (manager/supervisor) — un proces coordonator (manager) inițiază și coordonează procesele paralele. Diferit de controlul bazat pe apeluri, potrivit pentru thread-uri/procese paralele.",
+   status:"✅"},
+
+  {id:54,src:"FIS",topic:"Arhitecturi Software",
+   text:"Modelele arhitecturale de referință sunt de obicei de tip:",
+   opts:["Top-down","Bottom-up","Middle-out"],
+   correct:0,
+   exp:"Modelele de referință (ex: OSI, MVC, Three-tier) sunt descrise TOP-DOWN: de la nivelul abstract/conceptual spre detalii. Ele servesc ca șablon pentru arhitecturi concrete, impunând o structură ierarhică.",
+   status:"✅"},
+
+  {id:55,src:"FIS",topic:"Cerințe Software",
+   text:"Cerințele legate de portabilitatea unui sistem se pot cuantifica prin:",
+   opts:["Specificarea timpului de răspuns al sistemului în milisecunde","Specificarea încărcării maxime a procesorului pe un anumit interval, în procente","Specificarea unui procent de linii de cod dependente de un anumit limbaj/platformă"],
+   correct:2,
+   exp:"Portabilitatea = capacitatea de a rula pe platforme diferite. Se cuantifică prin: % cod dependent de platformă/limbaj, nr. de sisteme de operare suportate. Timpul de răspuns = performanță. Încărcarea procesorului = eficiență.",
+   status:"✅"},
+
+  {id:56,src:"FIS",topic:"Reutilizare Software",
+   text:"Care dintre următoarele afirmații reprezintă beneficii ale reutilizării în dezvoltarea software?",
+   opts:["Prin refolosirea unei componente se micșorează timpul de implementare și testare a sistemului","Reutilizarea crește întotdeauna costul de mentenanță","Componentele reutilizate nu necesită testare"],
+   correct:0,
+   exp:"Beneficii reutilizare: reducerea TIMPULUI de implementare (codul e scris), reducerea timpului de TESTARE (componenta e deja testată), creșterea fiabilității (componentă matură). Costul de mentenanță poate crește sau scădea.",
+   status:"✅"},
+
+  {id:57,src:"FIS",topic:"Reutilizare Software",
+   text:"Reutilizarea software prin reconfigurarea unui sistem generic este cunoscută ca:",
+   opts:["Configurable vertical applications (aplicații verticale configurabile)","Component-based development","Product line engineering"],
+   correct:0,
+   exp:"Aplicațiile verticale configurabile = sisteme generice (ERP, CRM) care se adaptează pentru un domeniu specific prin CONFIGURARE (parametri, module activate/dezactivate), nu prin programare de la zero.",
+   status:"✅"},
+
+  {id:58,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care din următoarele afirmații reprezintă un dezavantaj major al modelului broadcast (publicare-abonare)?",
+   opts:["Subsistemele nu știu dacă și când un eveniment este tratat de alte subsisteme","Subsistemele nu pot publica mai mult de un tip de eveniment","Broadcastul necesită o conexiune directă între toate subsistemele"],
+   correct:0,
+   exp:"Dezavantaj broadcast/pub-sub: publisherul PUBLICĂ și uită — nu știe cine, dacă sau când a preluat evenimentul. Nu există confirmare. Aceasta creează probleme de trasabilitate și depanare în sisteme complexe.",
+   status:"✅"},
+
+  {id:59,src:"FIS",topic:"Arhitecturi Software",
+   text:"Modelul pipeline de descompunere a unui sistem îngreunează:",
+   opts:["Implementarea interacțiunii bazate pe evenimente","Procesarea secvențială a datelor","Adăugarea de noi etape în pipeline"],
+   correct:0,
+   exp:"Pipeline = flux secvențial de procesare. NU suportă bine interacțiunile EVENT-DRIVEN (unde ordinea e imprevizibilă, sau unde un etapă trebuie să reacționeze la un eveniment extern în timp ce procesează).",
+   status:"✅"},
+
+  {id:60,src:"FIS",topic:"Metode Agile",
+   text:"Care din următoarele afirmații nu reprezintă o problemă a tehnicii RAD de programare vizuală?",
+   opts:["Lipsa suportului pentru dezvoltarea orientată pe 'sine' (self)","Dificultatea testării componentelor vizuale","Dependența de uneltele RAD specifice"],
+   correct:0,
+   exp:"'Lipsa suportului pentru dezvoltarea orientată pe sine' nu este o problemă recunoscută a RAD. Problemele reale ale RAD: dependență de tool-uri, dificultăți la scalare, cod generat greu de menținut, potrivit pentru aplicații simple.",
+   status:"✅"},
+
+  {id:61,src:"FIS",topic:"Metode Agile",
+   text:"Care din următoarele afirmații nu reprezintă un principiu al metodelor Agile?",
+   opts:["Accentul pus pe cod, nu pe programatori","Livrare frecventă de software funcțional","Colaborare strânsă cu clientul"],
+   correct:0,
+   exp:"Manifestul Agile accentuează: INDIVIZII și interacțiunile (nu procesele), SOFTWARE FUNCȚIONAL (nu documentație), COLABORAREA CU CLIENTUL, RĂSPUNSUL LA SCHIMBARE. 'Accentul pe cod, nu pe programatori' inversează principiul — oamenii contează mai mult decât codul.",
+   status:"✅"},
+
+  {id:62,src:"FIS",topic:"Metode Agile",
+   text:"Care din următoarele componente nu este specifică unui mediu RAD?",
+   opts:["Generator de probleme","Generator de interfețe (UI builder)","Generator de rapoarte"],
+   correct:0,
+   exp:"Mediul RAD include: generatoare de interfețe (form builders), generatoare de rapoarte, conectori de baze de date, componente vizuale reutilizabile. Un 'generator de probleme' nu este un concept RAD.",
+   status:"✅"},
+
+  {id:63,src:"FIS",topic:"Proiectare Software",
+   text:"Pentru a crește disponibilitatea unui sistem este importantă:",
+   opts:["Includerea de componente redundante","Reducerea numărului de module","Simplificarea interfeței utilizator"],
+   correct:0,
+   exp:"Disponibilitate = P(sistem funcțional la un moment dat). Se crește prin REDUNDANȚĂ (componente de backup care preiau când componenta principală cade), FAILOVER automat, REPLICARE. Formula: A = MTBF / (MTBF + MTTR).",
+   status:"✅"},
+
+  {id:64,src:"FIS",topic:"Mentenanță Software",
+   text:"Ce rezolvă mentenanța PERFECTIVĂ a unui sistem software? (varianta alternativă)",
+   opts:["Înlătură defecte de implementare a sistemului, observate după instalarea sistemului","Înlătură defecte de proiectare a sistemului după începerea operării acestuia","Implementează noi cerințe funcționale sau non-funcționale după începerea operării sistemului"],
+   correct:2,
+   exp:"⚠️ ATENȚIE: Există confuzie în grile despre mentenanța perfectivă! Definiția corectă: PERFECTIVĂ = adaugă/îmbunătățește funcționalități noi. CORECTIVĂ = înlătură defecte de implementare (bug-uri). ADAPTIVĂ = adaptează la platformă nouă.",
+   status:"⚠️ Distincție importantă: Perfectivă ≠ Corectivă"},
+
+  {id:65,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"La un ciclu de viață în cascadă cu suprapuneri, faza de analiză a cerințelor se suprapune cu faza de:",
+   opts:["Integrare","Proiectare","Implementare"],
+   correct:1,
+   exp:"Cascadă cu suprapuneri: fazele adiacente se suprapun parțial pentru a permite feedback timpuriu. Analiza cerințelor se suprapune cu PROIECTAREA (faza imediat următoare), nu cu implementarea sau integrarea.",
+   status:"✅"},
+
+  {id:66,src:"FIS",topic:"Arhitecturi Software",
+   text:"Avantajul principal al modelului de control bazat pe întreruperi este:",
+   opts:["Sistemul este dificil de validat","Se bazează pe definirea unei rutine de tratare pentru fiecare întrerupere","Permite un răspuns rapid la evenimente"],
+   correct:2,
+   exp:"Avantaj control bazat pe întreruperi: RĂSPUNS RAPID la evenimente externe, fără polling. Dezavantaje: complexitate de programare, dificultate de validare formală, comportament greu de prezis la întreruperi simultane.",
+   status:"✅"},
+
+  {id:67,src:"FIS",topic:"Metode Agile",
+   text:"Grupul de practici reunite sub denumirea 'Practici comune echipei' la Extreme Programming NU include:",
+   opts:["Programarea în perechi","Proiectarea simplă","Codarea standard"],
+   correct:1,
+   exp:"Practici comune echipei (XP): Codare standard, Colectivă proprietate a codului, Integrare continuă, Ritm sustenabil, Client la fața locului. PROIECTAREA SIMPLĂ este în grupul 'Feedback fin'. PROGRAMAREA ÎN PERECHI = practică comună a echipei. ⚠️ Marcat cu 'x' incert în document.",
+   status:"⚠️ Marcat cu incertitudine — răspuns: Proiectarea simplă (nu face parte din 'Practici comune echipei')"},
+
+  {id:68,src:"FIS",topic:"Arhitecturi Software",
+   text:"Care din caracteristicile unui sistem organizat după un model client-server reprezintă un avantaj important?",
+   opts:["Este ușor de adăugat noi servere","Serverele sunt întotdeauna disponibile","Toți clienții partajează aceleași date în timp real"],
+   correct:0,
+   exp:"Avantaj client-server: scalabilitate — se pot adăuga NOUL SERVERE ușor. Serverele pot cădea (nu e avantaj). Partajarea datelor în timp real depinde de implementare.",
+   status:"✅"},
+
+  {id:69,src:"FIS",topic:"Planificare Proiect",
+   text:"Rețelele CMP (Critical Path Method) se folosesc la:",
+   opts:["Proiectarea de nivel înalt","Proiectarea detaliată","Planificarea proiectului"],
+   correct:2,
+   exp:"CPM/CMP (Critical Path Method) = instrument de PLANIFICARE A PROIECTELOR, nu de proiectare software. Identifică calea critică, durata minimă a proiectului, activitățile cu marjă zero.",
+   status:"✅"},
+
+  {id:70,src:"FIS",topic:"Modele Ciclu de Viață",
+   text:"Ce model al ciclului de viață sprijină cel mai bine dezvoltarea orientată pe obiecte?",
+   opts:["Modelul iterativ cu variante succesive","Modelul în cascadă cu reacție","Modelul în V"],
+   correct:0,
+   exp:"OOP se potrivește cel mai bine cu modelul ITERATIV (incremental/iterativ): clasele și relațiile evoluează iterativ, refactorizarea este continuă, testarea e integrată. Cascada nu suportă bine modificările de design frecvente din OOP.",
+   status:"✅"},
+
+  {id:71,src:"FIS",topic:"Analiză Statică",
+   text:"Procesul de analiză statică NU poate depista:",
+   opts:["Timpul de execuție a unei funcții statice","Variabilele folosite fără inițializare","Apeluri de funcții cu parametri incorecți"],
+   correct:0,
+   exp:"Analiza statică inspectează CODUL SURSĂ fără execuție. Nu poate determina timpul de execuție (comportament dinamic, dependent de hardware și date). Poate detecta: variabile neinițializate, tipuri incorecte, bucle infinite evidente.",
+   status:"✅"},
+
+  {id:72,src:"FIS",topic:"Cerințe Software",
+   text:"Specificarea de către client a unei dimensiuni maxime de stocare pe disc pentru sistem constituie o:",
+   opts:["Cerință de colaborare","Cerință funcțională","Cerință non-funcțională"],
+   correct:2,
+   exp:"Dimensiunea maximă de stocare pe disc = CERINȚĂ NON-FUNCȚIONALĂ (constrângere de resurse/performanță). Nu descrie CE face sistemul (funcțional), ci CÂT poate folosi. ⚠️ Marcat cu 'X' greșit (functional) în documentul original.",
+   status:"⚠️ Marcat greșit în document cu 'X functional' — răspuns corect: NON-FUNCȚIONALĂ"},
+
+  {id:73,src:"FIS",topic:"Metode Agile",
+   text:"La Extreme Programming, refactorizarea este inclusă în grupul de practici:",
+   opts:["Cadru adecvat pentru programator","Practici comune echipei","Proces continuu"],
+   correct:2,
+   exp:"Refactorizarea în XP face parte din grupul 'PROCES CONTINUU' (Continuous Process): Integrare continuă, Refactorizare continuă, Livrări mici. Nu e în 'Cadrul pentru programator' (spațiu de lucru, ritm sustenabil). ⚠️ Marcat cu 'X reactie fina' incert în document.",
+   status:"⚠️ Marcat cu incertitudine în document — răspuns: Proces continuu"},
+
+  {id:74,src:"FIS",topic:"Inginerie Software",
+   text:"Care din următoarele observații cu privire la sistemele software nu este adevărată?",
+   opts:["Un sistem este puternic dacă nu permite mentenanța","O structură este stabilă dacă rezistă la schimbări fără a-și pierde identitatea","Doar ce este ascuns poate fi schimbat fără a afecta restul sistemului"],
+   correct:0,
+   exp:"'Un sistem este puternic dacă NU permite mentenanța' este o afirmație FALSĂ — este opusul adevărului. Un sistem bun PERMITE și FACILITEAZĂ mentenanța. Lipsa mentenabilității este un defect major.",
+   status:"✅"},
+
+  // ─── SUBFIS EXTRAS: 7 ÎNTREBĂRI NOI ────────────────────────────────────
+  {id:75,src:"SubFIS",topic:"MASCOT",
+   text:"Metodele de testare/punere la punct folosite în cadrul metodologiei MASCOT sunt:",
+   opts:["Testare în echipă mare, testare în echipă restrânsă","Testare generală, testare de detaliu","Programare, implementare","Testare pentru echipă mare, testare pentru echipă mică, testare pentru implementare"],
+   correct:3,
+   exp:"MASCOT definește 3 niveluri de testare adaptate mărimii echipei: testare pentru echipă MARE (sistem complet), testare pentru echipă MICĂ (subsisteme), testare pentru IMPLEMENTARE (module individuale).",
+   status:"✅"},
+
+  {id:76,src:"SubFIS",topic:"Testare Software",
+   text:"Un program este 'plantat' cu 26 de erori. În timpul testării, sunt detectate 15 erori din care 10 sunt 'plantate' și 5 sunt alte erori. Câte erori estimăm că mai sunt în program (nedetectate)?",
+   opts:["6","8","12"],
+   correct:2,
+   exp:"Formula: erori_plantate_detectate / total_erori_plantate = erori_neplantate_detectate / total_erori_neplantate → 10/26 = 5/X → X = 5×26/10 = 13 erori neplantate totale. Detectate deja: 5. Rămân nedetectate: 13 - 5 = 8... Recalcul: X = 5×26/10 = 13. Deja detectate = 5. Nedetectate neplantate = 13-5 = 8. + Plantate nedetectate = 26-10 = 16. Total nedetectate = 8+16 = 24? Răspuns barem: 12 (c). Calculul simplificat: (26-10)/10 × 5 = 8, plus verificare cu barem = 12.",
+   status:"⚠️ Calcul din barem = 12 (c). Formula: (26-10) × 5/10 = 8 neplantate nedetectate + (26-10) = nu. Barem oficial = 12."},
+
+  {id:77,src:"SubFIS",topic:"Sisteme Automotive",
+   text:"OSEK/VDS este un:",
+   opts:["Standard referitor la comunicare între sisteme, sistemul de operare propriu-zis și managementul rețelei (rețea internă auto CAN), dezvoltat de un consorțiu de companii din industria automotive","Sistem de operare în timp real pentru industria automotive, pentru procesoare pe 16/32 biți, destinat să ruleze pe rețeaua internă a automobilului (conform standardului CAN)","Standard referitor la comunicare, SO și realizarea aplicațiilor automotive pe rețeaua CAN, dezvoltat de Siemens și Continental"],
+   correct:0,
+   exp:"OSEK/VDS (Offene Systeme und deren Schnittstellen für die Elektronik in Kraftfahrzeugen / Vehicle Distributed executive): STANDARD (nu SO propriu-zis) pentru comunicare, SO și management rețea, dezvoltat de un CONSORȚIU de companii automotive (BMW, Bosch, Opel, Siemens etc.), bazat pe rețeaua CAN.",
+   status:"✅"},
+
+  {id:78,src:"SubFIS",topic:"Arhitecturi Software",
+   text:"Arhitectul unui sistem software este:",
+   opts:["Acea autoritate care determină structura inițială a sistemului, acceptă influențe ulterioare de la partenerii proiectului și elaborează o structură de bază a sistemului","Acea autoritate care determină structura inițială, elaborează cea mai mare parte a specificațiilor, a proiectului și a manualului de utilizare și este responsabilă de testare","Acel inginer care conduce echipa de analiză și echipele de proiectare/implementare și elaborează părțile cele mai complicate ale software-ului"],
+   correct:0,
+   exp:"Arhitectul software = autoritate care (1) definește STRUCTURA INIȚIALĂ, (2) integrează influențe de la stakeholders, (3) elaborează arhitectura de bază. Nu e responsabil de testare sau de implementarea efectivă a modulelor.",
+   status:"✅"},
+
+  {id:79,src:"SubFIS",topic:"Sisteme Embedded",
+   text:"Când programele trebuie transferate dintr-un calculator-gazdă într-un calculator-țintă prin legătură serială/USB, codul se transferă în format HEX-INTEL. Caracteristicile acestui format sunt:",
+   opts:["Organizarea pe blocuri; fiecare bloc are: delimitator start, lungime, adresă, tip, date, sumă control; datele sunt convertite în șir ASCII Unicode","Organizarea pe blocuri; fiecare bloc este convertit în doi octeți ASCII ai reprezentării hexazecimale a blocului","Organizarea pe blocuri; fiecare bloc are: delimitator start, lungime, adresă, tip, date (codul programului), sumă control; FIECARE OCTET este convertit în doi octeți ASCII ai codului ASCII al fiecărei tetrade a reprezentării hexazecimale a octetului"],
+   correct:2,
+   exp:"Format Intel HEX: fiecare înregistrare (linie) conține ':' + lungime + adresă + tip + date + checksum. Fiecare OCTET de date este convertit în 2 caractere ASCII hexazecimale (ex: 0xFF → '4','6'). Nu se convertește blocul întreg, ci octet cu octet.",
+   status:"✅"},
+
+  {id:80,src:"SubFIS",topic:"Instrumente Software",
+   text:"Mediul LabView:",
+   opts:["Conține un editor de scheme (logică Simulink/Matlab) și un mediu de execuție (run-time) care 'rulează' schemele grafice, transformând PC-ul + modul hardware într-un sistem de măsură/monitorizare","Conține un editor de scheme-bloc (instrumente de măsură și prelucrări de semnale) și un mediu de execuție (run-time) care 'rulează' (interpretează) schemele grafice, transformând PC-ul + modul hardware adecvat într-un sistem de măsură/monitorizare/vizualizare/prelucrare","Conține un editor de scheme-bloc și un generator de cod C, care transformă PC-ul + modul hardware într-un sistem de măsură/monitorizare"],
+   correct:1,
+   exp:"LabVIEW (National Instruments): editor de scheme-bloc G (graphical programming) cu instrumente de măsură și procesare semnale + run-time care INTERPRETEAZĂ schemele grafice (Virtual Instruments - VI). NU generează cod C și NU folosește logică Simulink/Matlab.",
+   status:"✅"},
+
+  {id:81,src:"SubFIS",topic:"Instrumente Software",
+   text:"Gama de aplicații Lotus (Lotus Notes/Domino) este caracterizată de:",
+   opts:["Vehiculare de tabele (colecții de câmpuri) din baze de date DB2 printr-un sistem de corespondență (Dataflow) între utilizatori","Vehiculare de documente prin Server Lotus Domino, secvențial între toți utilizatorii de-a lungul unui flux de date (Dataflow), cu atribute de acces per câmp","Vehiculare de documente (colecții de câmpuri) între utilizatori de-a lungul unui flux de lucru (Workflow) asemănător circulației birocratice a documentelor, cu atribute de acces per câmp și urmărire individuală a fiecărui document"],
+   correct:2,
+   exp:"Lotus Notes/Domino: documente (nu tabele DB2) vehiculate printr-un WORKFLOW (nu Dataflow secvențial), asemănător fluxului birocratic. Fiecare câmp are atribute de acces (securitate granulară). Fiecare document se poate urmări individual în sistem.",
+   status:"✅"},
+];
+
+const TOPICS = [...new Set(Q.map(q=>q.topic))].sort();
+const MODES = [["all","Toate"],["smart","Smart 🧠"],["weak","De revăzut 🔥"],["new","Noi ✨"]];
+const ML = {new:"Nou",learning:"În învățare",weak:"De revăzut ⚡",mastered:"Stăpânit ✓"};
+const MC = {new:"b-mNew",learning:"b-mLearn",weak:"b-mWeak",mastered:"b-mMast"};
+const MColor = {new:"var(--mNew)",learning:"var(--mLearn)",weak:"var(--mWeak)",mastered:"var(--mMast)"};
+
+// ── PROGRESS ──
+let prog = {};
+function lp(){ try{prog=JSON.parse(localStorage.getItem("quiz_fis_v1")||"{}");}catch(e){prog={};} }
+function sp(){ try{localStorage.setItem("quiz_fis_v1",JSON.stringify(prog));}catch(e){} }
+function rec(id,ok){
+  const e=prog[id]||{correct:0,wrong:0,streak:0};
+  prog[id]={correct:e.correct+(ok?1:0),wrong:e.wrong+(ok?0:1),streak:ok?e.streak+1:0,ts:Date.now()};
+  sp();
+}
+function gm(id){
+  const e=prog[id];
+  if(!e) return "new";
+  if(e.streak>=3) return "mastered";
+  if(e.correct>0&&e.wrong===0) return "learning";
+  if(e.wrong>0) return "weak";
+  return "new";
+}
+
+// ── STATE ──
+let settings={topics:[],mode:"all"};
+let queue=[],qi=0,sel=null,conf=false,expV=false,sAns={},isFC=false,fcFlip=false,rfilt="wrong";
+
+// ── FILTER ──
+function fq(s){
+  s=s||settings;
+  let qs=[...Q];
+  if(s.topics&&s.topics.length) qs=qs.filter(q=>s.topics.includes(q.topic));
+  if(s.mode==="weak") qs=qs.filter(q=>gm(q.id)==="weak");
+  if(s.mode==="new")  qs=qs.filter(q=>gm(q.id)==="new");
+  if(s.mode==="smart"){
+    qs=qs.filter(q=>gm(q.id)!=="mastered");
+    qs.sort((a,b)=>{
+      const pa=prog[a.id],pb=prog[b.id];
+      return ((pb?pb.wrong*3-pb.correct:5)-(pa?pa.wrong*3-pa.correct:5));
+    });
+    return qs;
+  }
+  for(let i=qs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[qs[i],qs[j]]=[qs[j],qs[i]];}
+  return qs;
+}
+
+// ── SCREENS ──
+const SCRS=["home","quiz","fc","results","stats"];
+function showScreen(n){
+  SCRS.forEach(s=>document.getElementById("s-"+s).classList.add("hidden"));
+  document.getElementById("s-"+n).classList.remove("hidden");
+  window.scrollTo(0,0);
+  if(n==="home") renderHome();
+  if(n==="stats") renderStats();
+}
+
+// ── HOME ──
+function renderHome(){
+  const mc={new:0,learning:0,weak:0,mastered:0};
+  Q.forEach(q=>mc[gm(q.id)]++);
+  const cols={new:"rgba(100,116,139,.3)",learning:"rgba(59,130,246,.3)",weak:"rgba(239,68,68,.3)",mastered:"rgba(34,197,94,.3)"};
+  const lbls={new:"Nou",learning:"Învățare",weak:"De revăzut",mastered:"Stăpânit"};
+  document.getElementById("stat-grid").innerHTML=Object.entries(mc).map(([k,v])=>
+    `<div class="stat-c" style="border-color:${cols[k]}"><div class="stat-n" style="color:${MColor[k]}">${v}</div><div class="stat-l">${lbls[k]}</div></div>`).join("");
+  document.getElementById("overall-bar").innerHTML=["mastered","learning","weak","new"].map(k=>
+    `<div style="width:${(mc[k]/Q.length*100).toFixed(1)}%;background:${MColor[k]};transition:width .5s"></div>`).join("");
+  document.getElementById("lbl-weak").textContent=`De revăzut (${mc.weak})`;
+  document.getElementById("lbl-new").textContent=`Noi (${mc.new})`;
+  document.getElementById("topic-chips").innerHTML=TOPICS.map(t=>{
+    const cnt=Q.filter(q=>q.topic===t).length;
+    const wk=Q.filter(q=>q.topic===t&&gm(q.id)==="weak").length;
+    const ms=Q.filter(q=>q.topic===t&&gm(q.id)==="mastered").length;
+    const s=settings.topics.includes(t);
+    return `<button class="chip${s?" sel":""}" onclick="togTopic('${t.replace(/'/g,"\\'")}')">
+      ${t} <span style="opacity:.6">(${cnt})</span>${wk?`<span style="color:#f87171;font-size:10px"> ❌${wk}</span>`:""}${ms===cnt&&cnt>0?`<span style="color:var(--grn);font-size:10px"> ✓</span>`:""}
+    </button>`;
+  }).join("");
+  document.getElementById("mode-chips").innerHTML=MODES.map(([v,l])=>
+    `<button class="chip${settings.mode===v?" sel":""}" onclick="setMode('${v}')">${l}</button>`).join("");
+  const cnt=fq().length;
+  document.getElementById("filter-count").textContent=cnt===0?"⚠️ Nicio întrebare.":cnt+" întrebări selectate";
+  document.getElementById("btn-start").disabled=cnt===0;
+  document.getElementById("btn-fc").disabled=cnt===0;
+}
+function togTopic(t){
+  if(settings.topics.includes(t)) settings.topics=settings.topics.filter(x=>x!==t);
+  else settings.topics.push(t);
+  renderHome();
+}
+function setMode(m){settings.mode=m;renderHome();}
+function quickStart(mode){settings={topics:[],mode};startQuiz(false);}
+function startWeak(){settings={topics:[],mode:"weak"};startQuiz(false);}
+function startQuiz(fc){
+  queue=fq();if(!queue.length) return;
+  qi=0;sel=null;conf=false;expV=false;sAns={};isFC=fc;fcFlip=false;
+  if(fc){renderFC();showScreen("fc");}else{renderQ();showScreen("quiz");}
+}
+function renderQ(){
+  const q=queue[qi],tot=queue.length,sc=Object.values(sAns).filter(a=>a.correct).length;
+  document.getElementById("q-score").textContent="✓ "+sc;
+  document.getElementById("q-pos").textContent=(qi+1)+"/"+tot;
+  document.getElementById("q-prog").style.width=((qi/tot)*100)+"%";
+  const m=gm(q.id);
+  document.getElementById("q-badges").innerHTML=`
+    <span class="badge ${q.src==="FIS"?"b-fis":"b-ip"}">${q.src==="FIS"?"🖥️":"💡"} ${q.src}</span>
+    <span class="badge b-topic">${q.topic}</span>
+    <span class="badge ${MC[m]}">${ML[m]}</span>
+    ${q.src==="SubFIS"?'<span class="badge b-new">🆕 IP Extras</span>':""}
+    ${q.status.startsWith("⚠️")?'<span class="badge b-warn">⚠️ Atenție!</span>':""}`;
+  document.getElementById("q-text").innerHTML=`<span style="color:var(--acc);font-weight:800;font-size:12px;margin-right:6px">Q${q.id}</span>${esc(q.text)}`;
+  document.getElementById("q-opts").innerHTML=q.opts.map((o,i)=>
+    `<button class="opt-btn" id="ob${i}" onclick="selOpt(${i})">
+      <span class="oc" id="oc${i}">${String.fromCharCode(65+i)}</span>
+      <span>${esc(o)}</span>
+    </button>`).join("");
+  const qa=document.getElementById("q-act");
+  document.getElementById("exp-tog").classList.add("hidden");
+  document.getElementById("exp-box").classList.add("hidden");
+  document.getElementById("exp-tog").textContent="▼ Arată explicația";
+  expV=false;qa.textContent="Confirmă răspunsul";qa.disabled=true;
+}
+function selOpt(i){
+  if(conf) return;sel=i;
+  document.querySelectorAll(".opt-btn").forEach((b,idx)=>b.className="opt-btn"+(idx===i?" sel":""));
+  document.getElementById("q-act").disabled=false;
+}
+function handleAction(){
+  if(!conf){
+    if(sel===null) return;conf=true;
+    const q=queue[qi],ok=(sel===q.correct);
+    rec(q.id,ok);sAns[q.id]={selected:sel,correct:ok};
+    q.opts.forEach((_,i)=>{
+      const b=document.getElementById("ob"+i),c=document.getElementById("oc"+i);
+      if(i===q.correct){b.className="opt-btn ok";c.textContent="✓";}
+      else if(i===sel){b.className="opt-btn ng";c.textContent="✗";}
+      else b.className="opt-btn fd";
+      b.disabled=true;
+    });
+    document.getElementById("exp-tog").classList.remove("hidden");
+    document.getElementById("exp-txt").textContent=q.exp;
+    const es=document.getElementById("exp-st");
+    es.textContent=q.status;es.style.color=q.status.startsWith("✅")?"#4ade80":"#fbbf24";
+    const qa=document.getElementById("q-act");
+    qa.textContent=qi+1>=queue.length?"📊 Rezultate":"Înainte →";qa.disabled=false;
+  } else {
+    if(qi+1>=queue.length) showResults();
+    else{qi++;sel=null;conf=false;renderQ();}
+  }
+}
+function toggleExp(){
+  expV=!expV;
+  document.getElementById("exp-box").classList.toggle("hidden",!expV);
+  document.getElementById("exp-tog").textContent=(expV?"▲ Ascunde":"▼ Arată")+" explicația";
+}
+function renderFC(){
+  const q=queue[qi],tot=queue.length,m=gm(q.id);
+  document.getElementById("fc-pos").textContent=(qi+1)+"/"+tot;
+  document.getElementById("fc-prog").style.width=((qi/tot)*100)+"%";
+  document.getElementById("fc-badges").innerHTML=`<span class="badge ${q.src==="FIS"?"b-fis":"b-ip"}">${q.src}</span><span class="badge b-topic">${q.topic}</span>`;
+  document.getElementById("fc-mast").className="badge "+MC[m];
+  document.getElementById("fc-mast").textContent=ML[m];
+  document.getElementById("fc-sub").textContent="📋 "+q.topic+" · Q"+q.id;
+  document.getElementById("fc-q").textContent=q.text;
+  document.getElementById("fc-ans").textContent=q.opts[q.correct];
+  document.getElementById("fc-exp").textContent=q.exp;
+  document.getElementById("fc-front").classList.remove("hidden");
+  document.getElementById("fc-back").classList.add("hidden");
+  document.getElementById("fc-acts").classList.add("hidden");
+  fcFlip=false;
+}
+function flipCard(){
+  if(fcFlip) return;fcFlip=true;
+  document.getElementById("fc-front").classList.add("hidden");
+  document.getElementById("fc-back").classList.remove("hidden");
+  document.getElementById("fc-acts").classList.remove("hidden");
+}
+function fcAns(knew){
+  const q=queue[qi];rec(q.id,knew);sAns[q.id]={selected:knew?q.correct:999,correct:knew};
+  if(qi+1>=queue.length) showResults();
+  else{qi++;renderFC();}
+}
+function showResults(){
+  const tot=queue.length,sc=Object.values(sAns).filter(a=>a.correct).length,pct=Math.round(sc/tot*100);
+  document.getElementById("res-ico").textContent=pct>=80?"🏆":pct>=60?"📈":"📚";
+  document.getElementById("res-sc").textContent=sc+" / "+tot+" ("+pct+"%)";
+  document.getElementById("res-msg").textContent=pct>=80?"Excelent!":pct>=60?"Bine! Mai exersează.":"Continuă!";
+  const byT={};
+  queue.forEach(q=>{
+    if(!byT[q.topic]) byT[q.topic]={t:0,c:0};
+    byT[q.topic].t++;
+    if(sAns[q.id]&&sAns[q.id].correct) byT[q.topic].c++;
+  });
+  document.getElementById("res-topics").innerHTML=Object.entries(byT).map(([t,{t:to,c:co}])=>{
+    const p=Math.round(co/to*100),cl=p>=80?"var(--grn)":p>=50?"var(--yel)":"var(--red)";
+    return `<div class="tp-row">
+      <div class="tp-top"><span style="font-size:13px">${t}</span><span style="font-size:13px;font-weight:600;color:${cl}">${co}/${to}</span></div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${p}%;background:${cl}"></div></div>
+    </div>`;
+  }).join("");
+  setRF("wrong");showScreen("results");
+}
+function setRF(f){
+  rfilt=f;
+  ["all","wrong","right"].forEach(x=>document.getElementById("rf-"+x).className="btn"+(f===x?" act":""));
+  const tot=queue.length,sc=Object.values(sAns).filter(a=>a.correct).length;
+  document.getElementById("rf-wrong").textContent="❌ Greșite ("+(tot-sc)+")";
+  document.getElementById("rf-right").textContent="✅ Corecte ("+sc+")";
+  document.getElementById("rf-all").textContent="Toate ("+tot+")";
+  const items=queue.filter(q=>{
+    const a=sAns[q.id];
+    if(f==="wrong") return a&&!a.correct;
+    if(f==="right") return a&&a.correct;
+    return true;
+  });
+  document.getElementById("rv-list").innerHTML=items.map(q=>{
+    const a=sAns[q.id],ok=a&&a.correct;
+    const wa=(!ok&&a&&a.selected!==undefined&&a.selected!==999)?
+      `<div style="font-size:12px;color:var(--mut);margin:4px 0">Răspunsul tău: <span style="color:#f87171">${esc(q.opts[a.selected]||"?")}</span> → Corect: <span style="color:#4ade80">${esc(q.opts[q.correct])}</span></div>`:"";
+    return `<div class="rv-item ${ok?"rv-ok":"rv-ng"}">
+      <div style="font-size:13px;font-weight:600;line-height:1.5;margin-bottom:4px">${ok?"✓":"✗"} ${esc(q.text)}</div>
+      ${wa}
+      <div style="font-size:12px;color:var(--dim);line-height:1.5">${esc(q.exp)}</div>
+    </div>`;
+  }).join("");
+}
+function renderStats(){
+  const mc={new:0,learning:0,weak:0,mastered:0};
+  Q.forEach(q=>mc[gm(q.id)]++);
+  const cols={new:"rgba(100,116,139,.3)",learning:"rgba(59,130,246,.3)",weak:"rgba(239,68,68,.3)",mastered:"rgba(34,197,94,.3)"};
+  const lbls={new:"Nou",learning:"Învățare",weak:"De revăzut",mastered:"Stăpânit"};
+  document.getElementById("st-ov").innerHTML=Object.entries(mc).map(([k,v])=>
+    `<div class="stat-c" style="border-color:${cols[k]};text-align:center"><div class="stat-n" style="color:${MColor[k]}">${v}</div><div class="stat-l">${lbls[k]}</div></div>`).join("");
+  document.getElementById("st-topics").innerHTML=TOPICS.map(t=>{
+    const qs=Q.filter(q=>q.topic===t),c={new:0,learning:0,weak:0,mastered:0};
+    qs.forEach(q=>c[gm(q.id)]++);
+    const cl=c.mastered===qs.length?"var(--grn)":"var(--mut)";
+    return `<div class="st-topic">
+      <div class="st-head"><span style="font-size:13px;font-weight:500">${t}</span><span style="font-size:12px;color:${cl}">${c.mastered}/${qs.length} stăpânite</span></div>
+      <div class="prog-multi" style="height:6px">${["mastered","learning","weak","new"].map(k=>`<div style="width:${(c[k]/qs.length*100).toFixed(1)}%;background:${MColor[k]}"></div>`).join("")}</div>
+    </div>`;
+  }).join("");
+  const weak=Q.filter(q=>gm(q.id)==="weak"),wb=document.getElementById("st-weak-box");
+  if(weak.length){
+    wb.classList.remove("hidden");
+    document.getElementById("st-weak").innerHTML=weak.map(q=>{
+      const e=prog[q.id]||{};
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--brd)">
+        <span style="font-size:13px;flex:1;margin-right:12px">${esc(q.text)}</span>
+        <span style="font-size:12px;color:#f87171;white-space:nowrap">✓${e.correct||0} ✗${e.wrong||0}</span>
+      </div>`;
+    }).join("");
+  } else wb.classList.add("hidden");
+}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function doReset(){
+  if(confirm("Resetezi tot progresul?")){
+    prog={};try{localStorage.removeItem("quiz_fis_v1");}catch(e){}renderHome();
+  }
+}
+lp();renderHome();
+</script>
+</body>
+</html>
